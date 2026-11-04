@@ -1,0 +1,27 @@
+[build]
+  publish = "."
+  # Rebuilds the editable sections from content/site.json (runs when Netlify builds from GitHub)
+  command = "node scripts/build.mjs"
+
+[[headers]]
+  for = "/assets/img/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    X-Frame-Options = "SAMEORIGIN"
+
+[[headers]]
+  for = "/admin/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+    Cache-Control = "no-store"
+
+[[headers]]
+  for = "/content/*"
+  [headers.values]
+    Cache-Control = "no-cache"

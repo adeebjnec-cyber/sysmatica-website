@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Site Admin — SysMatica</title>
+  <link rel="icon" type="image/png" href="/assets/img/favicon-32.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/admin/admin.css?v=1">
+</head>
+<body>
+  <!-- Login -->
+  <main class="login" id="login">
+    <form class="login-card" id="login-form" autocomplete="off">
+      <img src="/assets/img/logo-sysmatica.png" alt="SysMatica Mechatronics" class="login-logo">
+      <h1>Website admin</h1>
+      <p class="muted">Enter the admin password to edit clients, services, team and images.</p>
+      <label class="fld"><span>Password</span><input type="password" id="pw" required autocomplete="current-password" autofocus></label>
+      <p class="err" id="login-err" role="alert" hidden></p>
+      <button class="btn" type="submit" id="login-btn">Log in</button>
+      <a class="muted small back" href="/">← Back to the website</a>
+    </form>
+  </main>
+
+  <!-- Editor -->
+  <div class="app" id="app" hidden>
+    <header class="bar">
+      <img src="/assets/img/logo-sysmatica.png" alt="SysMatica" class="bar-logo">
+      <nav class="tabs" id="tabs" role="tablist" aria-label="Sections"></nav>
+      <div class="bar-r">
+        <span class="status" id="status"></span>
+        <a class="btn btn--ghost" href="/" target="_blank" rel="noopener">View site</a>
+        <button class="btn" type="button" id="save" disabled>Save changes</button>
+        <button class="btn btn--ghost" type="button" id="logout">Log out</button>
+      </div>
+    </header>
+    <p class="notice" id="notice" hidden></p>
+    <main class="panel" id="panel"></main>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="/admin/admin.js?v=1"></script>
+</body>
+</html>

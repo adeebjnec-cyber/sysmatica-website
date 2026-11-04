@@ -1,0 +1,712 @@
+{
+  "images": {
+    "hero": {
+      "src": "assets/img/robotics-ev-line.webp",
+      "alt": "Robotic arms assembling an EV battery pack on an automated production line."
+    },
+    "about": {
+      "src": "assets/img/spm-multi-gauging.webp",
+      "alt": "SysMatica multi-gauging special purpose machine.",
+      "caption": "Multi-gauging SPM · SysMatica"
+    },
+    "contact": {
+      "src": "assets/img/bearing-dark.webp"
+    },
+    "careersHero": {
+      "src": "assets/img/spm-multi-gauging.webp"
+    }
+  },
+  "team": [
+    {
+      "name": "Ramesh Kale",
+      "role": "Director",
+      "photo": "assets/img/team-ramesh-kale.webp",
+      "photoW": 790,
+      "photoH": 860,
+      "bio": "Ramesh brings nearly 20 years of experience in enterprise software and manufacturing systems. Before becoming Director of SysMatica in December 2023, he spent 16 years as a Senior Software Engineer at Nirlep Appliances Ltd.",
+      "tags": [
+        "MCA · Govt. Engineering College, Aurangabad",
+        "Microsoft Certified · Dynamics AX"
+      ],
+      "linkedin": "https://www.linkedin.com/in/rbkale",
+      "email": "ramesh@sysmpl.com"
+    },
+    {
+      "name": "Zubair Shaikh",
+      "role": "Chief Technical Officer (CTO)",
+      "photo": "assets/img/team-zubair-shaikh.webp",
+      "photoW": 735,
+      "photoH": 801,
+      "bio": "Leads technology and R&D at SysMatica as a mechanical design engineer, focused on CAD design and product development — with hands-on experience in 3D modelling, engineering drawings and manufacturing. Previously a project intern at Greaves Cotton Limited.",
+      "tags": [
+        "B.Tech Mechanical · MGM's JNEC",
+        "PTC Creo · SolidWorks · AutoCAD"
+      ],
+      "linkedin": "https://www.linkedin.com/in/zubair-shaikh-ab58b02a3",
+      "email": "shaikhzubair077@gmail.com"
+    }
+  ],
+  "services": [
+    {
+      "id": "spm",
+      "title": "Special Purpose Machines",
+      "shortName": "SPM",
+      "category": "Machines & Automation",
+      "short": "Special purpose machines are built for one specific operation or product rather than general use.",
+      "card": {
+        "src": "assets/img/spm-assembly-cut.webp",
+        "cut": true
+      },
+      "tagline": "Built for one operation. Built to do it perfectly.",
+      "intro": "Special purpose machines are built for one specific operation or product rather than general use. They deliver high speed, repeatability and a low cost per part for dedicated production — designed around your component and your cycle time.",
+      "applications": [
+        "Drilling, tapping, boring and milling of automotive and engineering parts",
+        "Assembly, testing and leak-test stations",
+        "Press-fit, riveting, marking and cutting operations",
+        "Dedicated production lines for high-volume parts"
+      ],
+      "types": [
+        "Multi-spindle drilling and tapping machines",
+        "Boring and facing machines",
+        "Assembly and press-fit machines",
+        "Testing and inspection machines",
+        "Hydraulic, pneumatic and servo-driven SPMs",
+        "Transfer lines and indexing machines"
+      ],
+      "images": [
+        {
+          "src": "assets/img/spm-assembly-cut.webp",
+          "cut": true,
+          "label": "Assembly SPM"
+        },
+        {
+          "src": "assets/img/spm-leak-test-cut.webp",
+          "cut": true,
+          "label": "Leak Testing Machine"
+        }
+      ]
+    },
+    {
+      "id": "automation",
+      "title": "Automation & Robotics",
+      "shortName": "Automation",
+      "category": "Machines & Automation",
+      "short": "Robotic cells and automated assembly lines raise output, repeatability and worker safety — from robotic body welding and assembly to EV battery pack lines.",
+      "card": {
+        "src": "assets/img/robotics-ev-line.webp",
+        "cut": false
+      },
+      "tagline": "Output, repeatability and safety — automated.",
+      "intro": "Robotic cells and automated assembly lines raise output, repeatability and worker safety — from robotic body welding and assembly to EV battery pack lines. We supply them as custom automation solutions that fit your production process.",
+      "applications": [
+        "Automotive body welding, assembly and painting",
+        "EV battery pack and electronics assembly",
+        "Material handling, palletizing and packaging",
+        "Machine tending for CNC and press lines"
+      ],
+      "types": [],
+      "images": [
+        {
+          "src": "assets/img/robotics-ev-line.webp",
+          "cut": false,
+          "thumb": "assets/img/robotics-ev-line-sm.webp"
+        },
+        {
+          "src": "assets/img/robotics-body-welding.webp",
+          "cut": false,
+          "thumb": "assets/img/robotics-body-welding-sm.webp"
+        }
+      ]
+    },
+    {
+      "id": "conveyors",
+      "title": "Conveyors",
+      "category": "Machines & Automation",
+      "short": "Conveyor systems move materials and finished goods through a plant with little manual handling.",
+      "card": {
+        "src": "assets/img/conveyor-roller-line.webp",
+        "cut": false
+      },
+      "tagline": "Material in motion, with little manual handling.",
+      "intro": "Conveyor systems move materials and finished goods through a plant with little manual handling. Our range includes roller, belt and slat conveyors in straight, curved and inclined layouts.",
+      "applications": [
+        "Warehousing, logistics and parcel sorting",
+        "Assembly lines and production flow",
+        "Packaging and end-of-line handling",
+        "Heavy-duty transfer in steel, automotive and engineering plants"
+      ],
+      "types": [],
+      "images": [
+        {
+          "src": "assets/img/conveyor-roller-line.webp",
+          "cut": false,
+          "thumb": "assets/img/conveyor-roller-line-sm.webp"
+        },
+        {
+          "src": "assets/img/conveyor-curved-belt.webp",
+          "cut": false,
+          "thumb": "assets/img/conveyor-curved-belt-sm.webp"
+        },
+        {
+          "src": "assets/img/conveyor-packaging.webp",
+          "cut": false,
+          "thumb": "assets/img/conveyor-packaging-sm.webp"
+        },
+        {
+          "src": "assets/img/conveyor-slat.webp",
+          "cut": false,
+          "thumb": "assets/img/conveyor-slat-sm.webp"
+        }
+      ]
+    },
+    {
+      "id": "dies",
+      "title": "Dies & Press Tools",
+      "shortName": "Dies",
+      "category": "Tooling",
+      "short": "Dies and press tools shape sheet metal into precise components in high-volume production.",
+      "card": {
+        "src": "assets/img/die-progressive-yellow-cut.webp",
+        "cut": true
+      },
+      "tagline": "Sheet metal, shaped precisely — at volume.",
+      "intro": "Dies and press tools shape sheet metal into precise components in high-volume production. Progressive dies, blanking and piercing dies, and die sets with guide pillars, springs and punches — built for accuracy and long tool life.",
+      "applications": [
+        "Automotive stampings and brackets",
+        "Electrical and electronic enclosures and terminals",
+        "Appliance and consumer goods parts",
+        "Blanking, piercing, bending, forming and drawing operations"
+      ],
+      "types": [],
+      "images": [
+        {
+          "src": "assets/img/die-progressive-yellow-cut.webp",
+          "cut": true
+        },
+        {
+          "src": "assets/img/die-progressive-cut.webp",
+          "cut": true
+        },
+        {
+          "src": "assets/img/die-set-cut.webp",
+          "cut": true
+        },
+        {
+          "src": "assets/img/die-guide-pillars-cut.webp",
+          "cut": true
+        },
+        {
+          "src": "assets/img/dies-assembly.webp",
+          "cut": false,
+          "thumb": "assets/img/dies-assembly-sm.webp"
+        }
+      ]
+    },
+    {
+      "id": "hydraulics",
+      "title": "Hydraulic Systems",
+      "shortName": "Hydraulics",
+      "category": "Machines & Automation",
+      "short": "Hydraulic power packs and cylinders deliver high force with smooth, controlled motion — complete power units with motors, tanks, valve blocks and oil coolers, and heavy-duty cylinders.",
+      "card": {
+        "src": "assets/img/hydraulic-cylinder.webp",
+        "cut": false
+      },
+      "tagline": "High force. Smooth, controlled motion.",
+      "intro": "Hydraulic power packs and cylinders deliver high force with smooth, controlled motion — complete power units with motors, tanks, valve blocks and oil coolers, and heavy-duty cylinders. Systems are customised for pressure, flow and duty cycle.",
+      "applications": [
+        "Hydraulic presses and metal forming",
+        "Steel plants and rolling mills",
+        "Earth-moving and construction machinery",
+        "Material handling, lifting and clamping on production lines"
+      ],
+      "types": [],
+      "images": [
+        {
+          "src": "assets/img/hydraulic-power-pack-cut.webp",
+          "cut": true
+        },
+        {
+          "src": "assets/img/hydraulic-twin-motor-cut.webp",
+          "cut": true
+        },
+        {
+          "src": "assets/img/hydraulic-l-tank-cut.webp",
+          "cut": true
+        },
+        {
+          "src": "assets/img/hydraulic-cylinder.webp",
+          "cut": false,
+          "thumb": "assets/img/hydraulic-cylinder-sm.webp"
+        }
+      ]
+    },
+    {
+      "id": "fabrication",
+      "title": "Industrial Fabrication",
+      "shortName": "Fabrication",
+      "category": "Components & Structures",
+      "short": "Industrial fabrication covers the cutting, welding and assembly of structural steel into frames, skids and plant structures — heavy base frames, long welded beams, trusses and multi-level process plant structures.",
+      "card": {
+        "src": "assets/img/fabrication-structure.webp",
+        "cut": false
+      },
+      "tagline": "Structural steel, welded true.",
+      "intro": "Industrial fabrication covers the cutting, welding and assembly of structural steel into frames, skids and plant structures — heavy base frames, long welded beams, trusses and multi-level process plant structures. Quality welding and accurate dimensions come first.",
+      "applications": [
+        "Machine bases, skids and support frames",
+        "Structural steel for plants and warehouses",
+        "Process plant platforms, staircases and towers",
+        "Material handling and equipment structures"
+      ],
+      "types": [],
+      "images": [
+        {
+          "src": "assets/img/fabrication-structure.webp",
+          "cut": false,
+          "thumb": "assets/img/fabrication-structure-sm.webp"
+        },
+        {
+          "src": "assets/img/fabrication-plant-tower.webp",
+          "cut": false,
+          "thumb": "assets/img/fabrication-plant-tower-sm.webp"
+        },
+        {
+          "src": "assets/img/fabrication-truss.webp",
+          "cut": false,
+          "thumb": "assets/img/fabrication-truss-sm.webp"
+        },
+        {
+          "src": "assets/img/fabrication-beams.webp",
+          "cut": false,
+          "thumb": "assets/img/fabrication-beams-sm.webp"
+        },
+        {
+          "src": "assets/img/fabrication-base-frame.webp",
+          "cut": false,
+          "thumb": "assets/img/fabrication-base-frame-sm.webp"
+        }
+      ]
+    },
+    {
+      "id": "jigs",
+      "title": "Jigs & Fixtures",
+      "shortName": "Fixtures",
+      "category": "Tooling",
+      "short": "Jigs and fixtures hold and position parts accurately so each one is machined, welded or inspected the same way — manual toggle-clamp, pneumatic and modular fixtures on precision base plates.",
+      "card": {
+        "src": "assets/img/jig-welding-line.webp",
+        "cut": false
+      },
+      "tagline": "Every part held the same way, every time.",
+      "intro": "Jigs and fixtures hold and position parts accurately so each one is machined, welded or inspected the same way — manual toggle-clamp, pneumatic and modular fixtures on precision base plates. They improve repeatability, shorten cycle times and reduce rework.",
+      "applications": [
+        "CNC machining and drilling fixtures",
+        "Welding fixtures for automotive and fabricated assemblies",
+        "Inspection and checking fixtures",
+        "Assembly-line positioning and holding"
+      ],
+      "types": [],
+      "images": [
+        {
+          "src": "assets/img/jig-clamp-fixture-cut.webp",
+          "cut": true
+        },
+        {
+          "src": "assets/img/jig-welding-line.webp",
+          "cut": false,
+          "thumb": "assets/img/jig-welding-line-sm.webp"
+        },
+        {
+          "src": "assets/img/jig-checking-fixture.webp",
+          "cut": false,
+          "thumb": "assets/img/jig-checking-fixture-sm.webp"
+        },
+        {
+          "src": "assets/img/jig-pneumatic.webp",
+          "cut": false,
+          "thumb": "assets/img/jig-pneumatic-sm.webp"
+        },
+        {
+          "src": "assets/img/jig-modular.webp",
+          "cut": false,
+          "thumb": "assets/img/jig-modular-sm.webp"
+        },
+        {
+          "src": "assets/img/jig-toggle-clamp.webp",
+          "cut": false,
+          "thumb": "assets/img/jig-toggle-clamp-sm.webp"
+        }
+      ]
+    },
+    {
+      "id": "npd",
+      "title": "New Product Development",
+      "shortName": "NPD",
+      "category": "Engineering",
+      "short": "New product development takes an idea from design to a working prototype, and then to production — 3D CAD modelling alongside the matching machined component.",
+      "card": {
+        "src": "assets/img/npd-cad.webp",
+        "cut": false
+      },
+      "tagline": "From idea to prototype to production.",
+      "intro": "New product development takes an idea from design to a working prototype, and then to production — 3D CAD modelling alongside the matching machined component. A design-led process reduces risk before tooling and manufacturing begin.",
+      "applications": [
+        "Concept design and 3D modelling",
+        "Prototype development and testing",
+        "Design improvement and cost reduction of existing parts",
+        "Transition from prototype to production"
+      ],
+      "types": [],
+      "images": [
+        {
+          "src": "assets/img/npd-cad.webp",
+          "cut": false
+        }
+      ]
+    },
+    {
+      "id": "nozzles",
+      "title": "Nozzles & Flow Components",
+      "shortName": "Nozzles",
+      "category": "Tooling",
+      "short": "Nozzles control how liquid or air is delivered — spray pattern, droplet size and flow rate.",
+      "card": {
+        "src": "assets/img/nozzle-spray.webp",
+        "cut": false
+      },
+      "tagline": "Spray pattern, droplet size and flow — controlled.",
+      "intro": "Nozzles control how liquid or air is delivered — spray pattern, droplet size and flow rate. Full-cone and flat-fan nozzles with threaded bodies, built from corrosion-resistant materials such as stainless steel.",
+      "applications": [
+        "Cooling and descaling in steel plants",
+        "Industrial cleaning and washing",
+        "Coating, lubrication and dust suppression",
+        "Chemical, food and process plants"
+      ],
+      "types": [],
+      "images": [
+        {
+          "src": "assets/img/nozzle-flat-fan-cut.webp",
+          "cut": true
+        },
+        {
+          "src": "assets/img/nozzle-spray.webp",
+          "cut": false,
+          "thumb": "assets/img/nozzle-spray-sm.webp"
+        }
+      ]
+    },
+    {
+      "id": "power",
+      "title": "Power Transmission",
+      "shortName": "Transmission",
+      "category": "Components & Structures",
+      "short": "Power transmission components move torque and motion between machine parts — spur, helical and bevel gears, shafts, racks, pulleys and bearings.",
+      "card": {
+        "src": "assets/img/power-gears-range.webp",
+        "cut": false
+      },
+      "tagline": "Torque and motion, carried faithfully.",
+      "intro": "Power transmission components move torque and motion between machine parts — spur, helical and bevel gears, shafts, racks, pulleys and bearings. We produce them to your drawings and specifications.",
+      "applications": [
+        "Gearboxes and speed reducers",
+        "Automotive and agricultural machinery",
+        "Conveyors, pumps and industrial drives",
+        "Heavy machinery and general engineering"
+      ],
+      "types": [],
+      "images": [
+        {
+          "src": "assets/img/power-gearset-cut.webp",
+          "cut": true
+        },
+        {
+          "src": "assets/img/power-pulleys-cut.webp",
+          "cut": true
+        },
+        {
+          "src": "assets/img/power-gears-range.webp",
+          "cut": false,
+          "thumb": "assets/img/power-gears-range-sm.webp"
+        },
+        {
+          "src": "assets/img/power-bevel-gears.webp",
+          "cut": false,
+          "thumb": "assets/img/power-bevel-gears-sm.webp"
+        }
+      ]
+    },
+    {
+      "id": "precision",
+      "title": "Precision Machined Components",
+      "shortName": "Precision",
+      "category": "Components & Structures",
+      "short": "Precision machined parts are made on CNC machines to tight tolerances and a high surface finish — shafts, flanges, valve and manifold blocks, housings and fittings in steel, stainless steel, aluminium and brass.",
+      "card": {
+        "src": "assets/img/precision-dark.webp",
+        "cut": false
+      },
+      "tagline": "Tight tolerances. High surface finish.",
+      "intro": "Precision machined parts are made on CNC machines to tight tolerances and a high surface finish — shafts, flanges, valve and manifold blocks, housings and fittings in steel, stainless steel, aluminium and brass.",
+      "applications": [
+        "Hydraulic and pneumatic components",
+        "Automotive and aerospace parts",
+        "Pumps, valves and instrumentation",
+        "Machine building and OEM supply"
+      ],
+      "types": [],
+      "images": [
+        {
+          "src": "assets/img/precision-dark.webp",
+          "cut": false,
+          "thumb": "assets/img/precision-dark-sm.webp"
+        },
+        {
+          "src": "assets/img/precision-blocks.webp",
+          "cut": false,
+          "thumb": "assets/img/precision-blocks-sm.webp"
+        },
+        {
+          "src": "assets/img/precision-flanges.webp",
+          "cut": false,
+          "thumb": "assets/img/precision-flanges-sm.webp"
+        },
+        {
+          "src": "assets/img/precision-aluminium.webp",
+          "cut": false,
+          "thumb": "assets/img/precision-aluminium-sm.webp"
+        },
+        {
+          "src": "assets/img/precision-brass-fittings.webp",
+          "cut": false,
+          "thumb": "assets/img/precision-brass-fittings-sm.webp"
+        },
+        {
+          "src": "assets/img/bearing-dark.webp",
+          "cut": false,
+          "thumb": "assets/img/bearing-dark-sm.webp"
+        }
+      ]
+    },
+    {
+      "id": "rolling",
+      "title": "Rolling Mill & Steel Plant",
+      "shortName": "Steel Plant",
+      "category": "Components & Structures",
+      "short": "Rolling mill and steel plant equipment must withstand extreme loads, heat and wear — mill rolls, roll chocks, large industrial gearboxes and heavy shafts with gears, plus refurbishment and spares for existing plants.",
+      "card": {
+        "src": "assets/img/rolling-gearbox.webp",
+        "cut": false
+      },
+      "tagline": "Built for extreme load, heat and wear.",
+      "intro": "Rolling mill and steel plant equipment must withstand extreme loads, heat and wear — mill rolls, roll chocks, large industrial gearboxes and heavy shafts with gears, plus refurbishment and spares for existing plants.",
+      "applications": [
+        "Hot and cold rolling mills",
+        "Steel and metal processing plants",
+        "Heavy equipment such as roll assemblies, gearboxes and spindles",
+        "Refurbishment and spares for existing plants"
+      ],
+      "types": [],
+      "images": [
+        {
+          "src": "assets/img/rolling-mill-rolls-cut.webp",
+          "cut": true
+        },
+        {
+          "src": "assets/img/rolling-gearbox.webp",
+          "cut": false,
+          "thumb": "assets/img/rolling-gearbox-sm.webp"
+        },
+        {
+          "src": "assets/img/rolling-chock.webp",
+          "cut": false,
+          "thumb": "assets/img/rolling-chock-sm.webp"
+        },
+        {
+          "src": "assets/img/rolling-shafts.webp",
+          "cut": false,
+          "thumb": "assets/img/rolling-shafts-sm.webp"
+        }
+      ]
+    }
+  ],
+  "industries": [
+    {
+      "name": "Automotive & EV",
+      "tags": [
+        "SPM",
+        "Automation",
+        "Dies",
+        "Fixtures",
+        "Transmission",
+        "Precision"
+      ],
+      "image": "assets/img/robotics-body-welding.webp"
+    },
+    {
+      "name": "Steel & Rolling Mills",
+      "tags": [
+        "Steel Plant",
+        "Hydraulics",
+        "Nozzles",
+        "Conveyors"
+      ],
+      "image": "assets/img/rolling-gearbox.webp"
+    },
+    {
+      "name": "Construction & Earth-moving",
+      "tags": [
+        "Hydraulics"
+      ],
+      "image": "assets/img/hydraulic-cylinder.webp"
+    },
+    {
+      "name": "Warehousing & Logistics",
+      "tags": [
+        "Conveyors",
+        "Automation"
+      ],
+      "image": "assets/img/conveyor-roller-line.webp"
+    },
+    {
+      "name": "Electrical & Electronics",
+      "tags": [
+        "Dies",
+        "Automation"
+      ],
+      "image": "assets/img/robotics-ev-line.webp"
+    },
+    {
+      "name": "Process, Chemical & Food Plants",
+      "tags": [
+        "Nozzles",
+        "Fabrication"
+      ],
+      "image": "assets/img/fabrication-plant-tower.webp"
+    },
+    {
+      "name": "Aerospace & OEM Supply",
+      "tags": [
+        "Precision"
+      ],
+      "image": "assets/img/precision-blocks.webp"
+    },
+    {
+      "name": "Agricultural Machinery",
+      "tags": [
+        "Transmission"
+      ],
+      "image": "assets/img/power-gears-range.webp"
+    }
+  ],
+  "clients": [
+    {
+      "name": "Dhoot Transmission",
+      "url": "https://www.dhoottransmission.com/",
+      "logo": "assets/img/clients/dhoot.png",
+      "logoW": 900,
+      "logoH": 210,
+      "tall": false,
+      "what": "Automotive wiring harnesses, electronics & switches"
+    },
+    {
+      "name": "Belrise Industries",
+      "url": "https://belriseindustries.com/",
+      "logo": "assets/img/clients/belrise.png",
+      "logoW": 900,
+      "logoH": 234,
+      "tall": false,
+      "what": "Automotive & white-goods components"
+    },
+    {
+      "name": "Caterpillar",
+      "url": "https://www.caterpillar.com/",
+      "logo": "assets/img/clients/caterpillar.svg",
+      "logoW": 112,
+      "logoH": 20,
+      "tall": false,
+      "what": "Construction & mining equipment"
+    },
+    {
+      "name": "Premium Transmission",
+      "url": "https://www.premium-transmission.com/",
+      "logo": "assets/img/clients/premium-transmission.png",
+      "logoW": 209,
+      "logoH": 43,
+      "tall": false,
+      "what": "Industrial gearboxes & power transmission"
+    },
+    {
+      "name": "Endurance Group",
+      "url": "https://www.endurancegroup.com/",
+      "logo": "assets/img/clients/endurance.png",
+      "logoW": 162,
+      "logoH": 44,
+      "tall": false,
+      "what": "Automotive components"
+    },
+    {
+      "name": "Liebherr",
+      "url": "https://www.liebherr.com/",
+      "logo": "assets/img/clients/liebherr.svg",
+      "logoW": 1000,
+      "logoH": 124,
+      "tall": false,
+      "what": "Construction machinery & engineering equipment"
+    },
+    {
+      "name": "Hyosung TNC",
+      "url": "https://www.hyosungtextile.com/en",
+      "logo": "assets/img/clients/hyosung.png",
+      "logoW": 688,
+      "logoH": 93,
+      "tall": false,
+      "what": "Performance textiles"
+    },
+    {
+      "name": "Bajaj Electricals",
+      "url": "https://www.bajajelectricals.com/",
+      "logo": "assets/img/clients/bajaj.png",
+      "logoW": 207,
+      "logoH": 100,
+      "tall": true,
+      "what": "Home appliances & electrical products"
+    },
+    {
+      "name": "Wockhardt",
+      "url": "https://www.wockhardt.com/about-us/our-manufacturing-units/shendra-india/",
+      "logo": "assets/img/clients/wockhardt.png",
+      "logoW": 256,
+      "logoH": 40,
+      "tall": false,
+      "what": "Pharmaceuticals · Shendra manufacturing unit"
+    },
+    {
+      "name": "Umasons Auto Compo",
+      "url": "http://www.umasons.com/",
+      "logo": "assets/img/clients/umasons.svg",
+      "logoW": 434,
+      "logoH": 88,
+      "tall": false,
+      "what": "Precision tubular auto components"
+    },
+    {
+      "name": "Varroc",
+      "url": "https://www.varroc.com/",
+      "logo": "assets/img/clients/varroc.png",
+      "logoW": 128,
+      "logoH": 121,
+      "tall": true,
+      "what": "Automotive components"
+    },
+    {
+      "name": "Rayon Illuminations",
+      "url": "https://www.rayonilluminations.com/",
+      "logo": "assets/img/clients/rayon.png",
+      "logoW": 261,
+      "logoH": 89,
+      "tall": false,
+      "what": "Industrial LED lighting, AGVs & power controllers"
+    }
+  ]
+}
