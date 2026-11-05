@@ -41,7 +41,10 @@ rebuild the pages.
      run step 3 again.
 3. Run:
    ```
-   node scripts/admin-setup.mjs --repo OWNER/REPO --branch main --token github_pat_...
+   node scripts/admin-setup.mjs --repo OWNER/REPO --branch main
+   ```
+   It asks for the token (paste it; it stays hidden) and the admin password.
+   ```
    ```
    Commit the new `admin/config.json`.
 4. Hosting:

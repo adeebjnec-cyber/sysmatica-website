@@ -26,8 +26,11 @@ function ask(q, hidden) {
   });
 }
 
-const repo = arg('repo'), token = arg('token'), branch = arg('branch') || 'main';
-if ((repo || token) && !(repo && token)) { console.error('Give both --repo and --token to connect GitHub.'); process.exit(1); }
+const repo = arg('repo'), branch = arg('branch') || 'main';
+let token = arg('token');
+if (token && !repo) { console.error('Give --repo with --token to connect GitHub.'); process.exit(1); }
+if (repo && !token) token = (await ask('Paste the GitHub token (it stays hidden): ', true)).trim();
+if (repo && !/^(github_pat_|ghp_)/.test(token)) { console.error('That does not look like a GitHub token (it should start with github_pat_).'); process.exit(1); }
 
 let password = arg('password');
 if (!password) {
