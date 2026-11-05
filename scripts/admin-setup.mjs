@@ -19,10 +19,26 @@ const ITER = 600000;
 const arg = (k) => { const i = process.argv.indexOf('--' + k); return i > -1 ? process.argv[i + 1] : undefined; };
 
 function ask(q, hidden) {
+  if (!hidden || !process.stdin.isTTY) {
+    return new Promise((ok) => { const rl = createInterface({ input: process.stdin, output: process.stdout }); rl.question(q, (a) => { rl.close(); ok(a); }); });
+  }
+  // Hidden input: read raw keystrokes ourselves and echo only "*", so nothing typed or pasted is ever shown.
   return new Promise((ok) => {
-    const rl = createInterface({ input: process.stdin, output: process.stdout, terminal: true });
-    if (hidden) rl._writeToOutput = (s) => { if (s.includes(q)) rl.output.write(s); else rl.output.write('*'); };
-    rl.question(q, (a) => { rl.close(); if (hidden) process.stdout.write('\n'); ok(a); });
+    let value = '';
+    process.stdout.write(q);
+    process.stdin.setRawMode(true); process.stdin.resume(); process.stdin.setEncoding('utf8');
+    const onData = (chunk) => {
+      for (const ch of chunk.replace(/\x1b\[[0-9;]*[~A-Za-z]/g, '')) {
+        if (ch === '\r' || ch === '\n') {
+          process.stdin.off('data', onData); process.stdin.setRawMode(false); process.stdin.pause();
+          process.stdout.write('\n'); ok(value); return;
+        }
+        if (ch === '\u0003') { process.stdout.write('\n'); process.exit(130); }
+        if (ch === '\u007f' || ch === '\b') { if (value) { value = value.slice(0, -1); process.stdout.write('\b \b'); } continue; }
+        if (ch >= ' ') { value += ch; process.stdout.write('*'); }
+      }
+    };
+    process.stdin.on('data', onData);
   });
 }
 
