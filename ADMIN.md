@@ -44,8 +44,6 @@ rebuild the pages.
    node scripts/admin-setup.mjs --repo OWNER/REPO --branch main
    ```
    It asks for the token (paste it; it stays hidden) and the admin password.
-   ```
-   ```
    Commit the new `admin/config.json`.
 4. Hosting:
    - **Netlify:** link the site to the repository. `netlify.toml` already runs the build.
