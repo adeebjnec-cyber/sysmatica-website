@@ -1,8 +1,8 @@
 /* SysMatica — website admin.
-   On the website, the password is checked and changes are published by the Netlify function
-   netlify/functions/admin.mjs. On this computer (node scripts/admin-server.mjs) changes are
-   saved straight into the files instead. Content lives in content/site.json; scripts/render.mjs
-   turns it into the editable parts of index.html and careers.html. */
+   The password unlocks admin/config.json (AES-GCM, key from PBKDF2), which holds a GitHub token
+   for this one repository. Edits are committed to GitHub as content/site.json plus any uploaded
+   images; the GitHub Actions workflow then rebuilds the pages and publishes the site.
+   On this computer (node scripts/admin-server.mjs) saves go straight into the local files. */
 (function () {
   'use strict';
   var $ = function (s, c) { return (c || document).querySelector(s); };
@@ -34,50 +34,61 @@
   function slug(s) { return String(s || 'image').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 40) || 'image'; }
   function clone(o) { return JSON.parse(JSON.stringify(o)); }
 
-  /* ---------- live website: Netlify function ---------- */
-  var FN = '/.netlify/functions/admin';
-  var session = null;
-  function callFn(body) {
-    return fetch(FN, { method: 'POST', cache: 'no-store', headers: { 'Content-Type': 'application/json', Authorization: session ? 'Bearer ' + session : '' }, body: JSON.stringify(body) })
-      .then(function (r) {
-        return r.json().catch(function () { return {}; }).then(function (j) {
-          if (r.status === 401 && body.action !== 'login' && body.action !== 'password') { session = null; throw new Error('Your login has expired. Please copy any unsaved text, then reload the page and log in again.'); }
-          if (!r.ok) throw new Error(j.error || 'The admin service is not available (' + r.status + ').');
-          return j;
-        });
+  /* ---------- password → credentials ---------- */
+  async function unlock(password) {
+    var res = await fetch('/admin/config.json', { cache: 'no-store' });
+    if (!res.ok) throw new Error('The admin has not been set up yet (admin/config.json is missing).');
+    var cfg = await res.json();
+    var base = await crypto.subtle.importKey('raw', new TextEncoder().encode(password), 'PBKDF2', false, ['deriveKey']);
+    var key = await crypto.subtle.deriveKey({ name: 'PBKDF2', salt: b64.to(cfg.salt), iterations: cfg.iter, hash: 'SHA-256' }, base, { name: 'AES-GCM', length: 256 }, false, ['decrypt']);
+    try {
+      var plain = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: b64.to(cfg.iv) }, key, b64.to(cfg.data));
+      return JSON.parse(new TextDecoder().decode(plain));
+    } catch (e) { return null; }
+  }
+
+  /* ---------- storage backends ---------- */
+  function githubBackend(gh) {
+    var api = function (path, opts) {
+      opts = opts || {};
+      return fetch('https://api.github.com/repos/' + gh.repo + path, {
+        method: opts.method || 'GET',
+        headers: { Authorization: 'Bearer ' + gh.token, Accept: 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28' },
+        body: opts.body ? JSON.stringify(opts.body) : undefined,
+        cache: 'no-store',
+      }).then(function (r) {
+        if (!r.ok) return r.text().then(function (t) { throw new Error('GitHub ' + r.status + ': ' + t.slice(0, 200)); });
+        return r.json();
       });
-  }
-  function sha1Hex(b64str) {
-    return crypto.subtle.digest('SHA-1', b64.to(b64str)).then(function (buf) { return Array.prototype.map.call(new Uint8Array(buf), function (x) { return x.toString(16).padStart(2, '0'); }).join(''); });
-  }
-  function netlifyBackend() {
+    };
+    var loadedSha = null;
     return {
       name: 'live website',
-      load: function () { return fetch('/content/site.json?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.json(); }); },
-      save: async function (files, message, progress) {
-        var uploads = {}, byPath = {};
+      load: function () {
+        return api('/contents/content/site.json?ref=' + encodeURIComponent(gh.branch)).then(function (f) {
+          loadedSha = f.sha;
+          return JSON.parse(new TextDecoder().decode(b64.to(f.content.replace(/\s/g, ''))));
+        });
+      },
+      save: async function (files, message) {
+        var cur = await api('/contents/content/site.json?ref=' + encodeURIComponent(gh.branch));
+        if (loadedSha && cur.sha !== loadedSha && !confirm('The content was changed somewhere else since you opened the admin. Save anyway and overwrite those changes?')) throw new Error('Save cancelled.');
+        var ref = await api('/git/ref/heads/' + encodeURIComponent(gh.branch));
+        var head = await api('/git/commits/' + ref.object.sha);
+        var tree = [];
         for (var i = 0; i < files.length; i++) {
-          if (files[i].path === 'content/site.json') continue;
-          uploads[files[i].path] = await sha1Hex(files[i].content); byPath[files[i].path] = files[i].content;
+          var blob = await api('/git/blobs', { method: 'POST', body: { content: files[i].content, encoding: 'base64' } });
+          tree.push({ path: files[i].path, mode: '100644', type: 'blob', sha: blob.sha });
         }
-        progress('Publishing…');
-        var r = await callFn({ action: 'save', site: data, files: uploads });
-        for (var k = 0; k < r.upload.length; k++) {
-          progress('Uploading image ' + (k + 1) + ' of ' + r.upload.length + '…');
-          await callFn({ action: 'upload', deployId: r.deployId, path: r.upload[k], content: byPath[r.upload[k]] });
-        }
-        progress('Going live…');
-        for (var t = 0; t < 45; t++) {
-          var st = await callFn({ action: 'status', deployId: r.deployId });
-          if (st.state === 'ready') return /--/.test(location.hostname) ? 'Saved to this preview copy: ' + r.url : 'Saved. The website is updated — reload it to see the changes.';
-          if (st.state === 'error') throw new Error('Netlify could not publish the change: ' + (st.error || 'unknown error'));
-          await new Promise(function (ok) { setTimeout(ok, 2000); });
-        }
-        return 'Saved. Netlify is still publishing — the website updates within a minute.';
+        var t = await api('/git/trees', { method: 'POST', body: { base_tree: head.tree.sha, tree: tree } });
+        var c = await api('/git/commits', { method: 'POST', body: { message: message, tree: t.sha, parents: [ref.object.sha] } });
+        await api('/git/refs/heads/' + encodeURIComponent(gh.branch), { method: 'PATCH', body: { sha: c.sha } });
+        var after = await api('/contents/content/site.json?ref=' + c.sha);
+        loadedSha = after.sha;
+        return 'Saved. The live website updates in about 1–2 minutes.';
       },
     };
   }
-
   function localBackend() {
     return {
       name: 'this computer',
@@ -390,35 +401,49 @@
   }
 
   /* ---------- start ---------- */
-  async function isLocal() {
-    if (!/^(localhost|127\.0\.0\.1)$/.test(location.hostname)) return false;
-    try { var r = await fetch('/__admin/ping', { cache: 'no-store' }); return r.ok; } catch (e) { return false; }
+  var creds = null;
+  async function chooseBackend(c) {
+    if (c.github && c.github.token && c.github.repo) return githubBackend(c.github);
+    if (/^(localhost|127\.0\.0\.1)$/.test(location.hostname)) {
+      try { var r = await fetch('/__admin/ping', { cache: 'no-store' }); if (r.ok) return localBackend(); } catch (e) {}
+    }
+    return { name: 'not connected', readOnly: true, load: localBackend().load, save: function () { return Promise.reject(new Error('Saving is not connected yet.')); } };
   }
   $('#login-form').addEventListener('submit', async function (e) {
     e.preventDefault();
     var err = $('#login-err'), btn = $('#login-btn');
     err.hidden = true; btn.disabled = true; btn.textContent = 'Checking…';
     try {
-      if (await isLocal()) backend = localBackend();
-      else {
-        var r = await callFn({ action: 'login', password: $('#pw').value });
-        session = r.token; backend = netlifyBackend();
-        $('#chpw').hidden = false;
-      }
+      creds = await unlock($('#pw').value);
+      if (!creds) { await new Promise(function (ok) { setTimeout(ok, 600); }); throw new Error('Wrong password.'); }
+      backend = await chooseBackend(creds);
       data = await backend.load();
       saved = JSON.stringify(data);
       $('#pw').value = '';
       $('#login').hidden = true; $('#app').hidden = false;
-      if (backend.name === 'this computer') { var n = $('#notice'); n.hidden = false; n.textContent = 'Test mode on this computer: saves go into the local files, not the live website.'; }
+      $('#chpw').hidden = !!backend.readOnly;
+      var n = $('#notice');
+      if (backend.readOnly) { n.hidden = false; n.textContent = 'Saving is not connected yet, so you can look around but changes cannot be saved.'; }
+      else if (backend.name === 'this computer') { n.hidden = false; n.textContent = 'Test mode on this computer: saves go into the local files, not the live website.'; }
       Object.keys(SECTIONS).forEach(function (k) { $('#tabs').appendChild(h('button', { type: 'button', role: 'tab', 'data-k': k, onclick: function () { showSection(k); } }, SECTIONS[k].label)); });
       showSection(current); changed();
     } catch (ex) { err.textContent = ex.message; err.hidden = false; }
     btn.disabled = false; btn.textContent = 'Log in';
   });
 
-  /* ---------- change password ---------- */
+  /* ---------- change password: re-encrypt admin/config.json with the new password ---------- */
+  async function encryptConfig(secret, password) {
+    var iter = 600000, salt = crypto.getRandomValues(new Uint8Array(16)), iv = crypto.getRandomValues(new Uint8Array(12));
+    var base = await crypto.subtle.importKey('raw', new TextEncoder().encode(password), 'PBKDF2', false, ['deriveKey']);
+    var key = await crypto.subtle.deriveKey({ name: 'PBKDF2', salt: salt, iterations: iter, hash: 'SHA-256' }, base, { name: 'AES-GCM', length: 256 }, false, ['encrypt']);
+    var enc = await crypto.subtle.encrypt({ name: 'AES-GCM', iv: iv }, key, new TextEncoder().encode(JSON.stringify(secret)));
+    return JSON.stringify({ v: 1, iter: iter, salt: b64.from(salt), iv: b64.from(iv), data: b64.from(enc) }, null, 2) + '\n';
+  }
   var dlg = $('#pw-dlg');
-  $('#chpw').addEventListener('click', function () { $('#pw-form').reset(); $('#pw-err').hidden = true; dlg.showModal(); });
+  $('#chpw').addEventListener('click', function () {
+    if (isDirty()) { toast('Please save or undo your changes first, then change the password.', true); return; }
+    $('#pw-form').reset(); $('#pw-err').hidden = true; dlg.showModal();
+  });
   $('#pw-cancel').addEventListener('click', function () { dlg.close(); });
   $('#pw-form').addEventListener('submit', async function (e) {
     e.preventDefault();
@@ -427,8 +452,12 @@
     if (nx.length < 10) { err.textContent = 'Please use at least 10 characters (a short sentence works well).'; err.hidden = false; return; }
     if (nx !== $('#pw-again').value) { err.textContent = 'The two new passwords do not match.'; err.hidden = false; return; }
     btn.disabled = true; btn.textContent = 'Changing…';
-    try { var r = await callFn({ action: 'password', current: cur, next: nx }); session = r.token; dlg.close(); toast('Password changed. Use the new password next time you log in.'); }
-    catch (ex) { err.textContent = ex.message; err.hidden = false; }
+    try {
+      if (!(await unlock(cur))) throw new Error('The current password is wrong.');
+      var cfg = await encryptConfig(creds, nx);
+      await backend.save([{ path: 'admin/config.json', content: b64.utf8(cfg) }], 'Website admin: change password', function () {});
+      dlg.close(); toast('Password changed. It takes effect when the website finishes updating (1–2 minutes).');
+    } catch (ex) { err.textContent = ex.message; err.hidden = false; }
     btn.disabled = false; btn.textContent = 'Change password';
   });
 

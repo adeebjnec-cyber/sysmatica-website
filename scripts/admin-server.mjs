@@ -11,7 +11,7 @@ import { execFileSync } from 'node:child_process';
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const PORT = +(process.env.PORT || 5181);
 const TYPES = { '.html': 'text/html; charset=utf-8', '.css': 'text/css', '.js': 'text/javascript', '.json': 'application/json', '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.webp': 'image/webp', '.svg': 'image/svg+xml', '.ico': 'image/x-icon', '.avif': 'image/avif', '.gif': 'image/gif', '.xml': 'application/xml', '.txt': 'text/plain' };
-const ALLOWED = (p) => p === 'content/site.json' || /^assets\/img\/uploads\/[a-z0-9-]+\.(webp|png|svg)$/.test(p);
+const ALLOWED = (p) => p === 'content/site.json' || p === 'admin/config.json' || /^assets\/img\/uploads\/[a-z0-9-]+\.(webp|png|svg)$/.test(p);
 
 const send = (res, code, body, type = 'application/json') => { res.writeHead(code, { 'Content-Type': type, 'Cache-Control': 'no-store' }); res.end(body); };
 
@@ -23,7 +23,7 @@ createServer(async (req, res) => {
       let body = ''; for await (const c of req) body += c;
       const { files } = JSON.parse(body);
       for (const f of files) if (!ALLOWED(f.path)) return send(res, 400, JSON.stringify({ error: 'Not allowed: ' + f.path }));
-      JSON.parse(Buffer.from(files.find((f) => f.path === 'content/site.json').content, 'base64').toString('utf8'));
+      for (const f of files) if (f.path.endsWith('.json')) JSON.parse(Buffer.from(f.content, 'base64').toString('utf8'));
       for (const f of files) {
         const out = join(ROOT, f.path);
         await mkdir(dirname(out), { recursive: true });
