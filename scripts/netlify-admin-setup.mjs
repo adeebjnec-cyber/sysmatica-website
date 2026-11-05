@@ -4,7 +4,7 @@
      1. a Netlify personal access token (Netlify → User settings → Applications → New access token)
      2. the admin password, twice (at least 10 characters)
    Nothing you type is shown or written to disk. The token is saved as the site's
-   ADMIN_NETLIFY_TOKEN environment variable (functions only); the password is stored as a
+   ADMIN_NETLIFY_TOKEN environment variable; the password is stored as a
    PBKDF2 hash in Netlify Blobs. Redeploy the site afterwards so the function picks up the token.
    Options:  --password-only   keep the saved token, only reset the password */
 import { createInterface } from 'node:readline';
@@ -43,7 +43,7 @@ if (!passwordOnly) {
   await api(`/accounts/${site.account_id}/env/ADMIN_NETLIFY_TOKEN${q}`, { method: 'DELETE', okStatus: [404] });
   await api(`/accounts/${site.account_id}/env${q}`, {
     method: 'POST',
-    body: JSON.stringify([{ key: 'ADMIN_NETLIFY_TOKEN', scopes: ['functions'], values: [{ value: token, context: 'all' }] }]),
+    body: JSON.stringify([{ key: 'ADMIN_NETLIFY_TOKEN', values: [{ value: token, context: 'all' }] }]),
   });
   console.log('Saved the token as the site setting ADMIN_NETLIFY_TOKEN.');
 }

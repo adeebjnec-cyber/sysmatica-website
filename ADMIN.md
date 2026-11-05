@@ -19,7 +19,7 @@ The owner edits **clients, services, team, industries and section images** at
 1. Netlify → avatar → **User settings → Applications → Personal access tokens → New access token**.
 2. In this folder run `node scripts/netlify-admin-setup.mjs`. Paste the token and choose the
    admin password (both stay hidden). The token is saved as the site's `ADMIN_NETLIFY_TOKEN`
-   setting (functions only).
+   setting.
 3. Deploy once (below) so the function picks up the token.
 
 ## Change the password

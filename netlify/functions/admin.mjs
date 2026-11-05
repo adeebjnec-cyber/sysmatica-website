@@ -55,10 +55,14 @@ function baseDeployFor(host) {
 
 async function listFiles(deployId) {
   const files = {};
-  for (let page = 1; page < 50; page++) {
-    const list = await netlify(`/deploys/${deployId}/files?page=${page}&per_page=500`);
+  // Netlify pages this list (at most 100 per page, whatever per_page says), so read until a page comes back empty.
+  for (let page = 1; page <= 100; page++) {
+    const list = await netlify(`/deploys/${deployId}/files?page=${page}&per_page=100`);
+    if (!Array.isArray(list) || !list.length) break;
     list.forEach((f) => { files[f.id] = f.sha; });
-    if (list.length < 500) break;
+  }
+  for (const must of ['/index.html', '/careers.html', '/assets/css/cinema.css', '/admin/admin.js']) {
+    if (!files[must]) throw Object.assign(new Error('Could not read the full file list of the current site, so nothing was changed.'), { status: 502 });
   }
   return files;
 }
