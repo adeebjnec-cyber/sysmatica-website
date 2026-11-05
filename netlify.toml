@@ -1,27 +1,10 @@
+# The site is published from _site, which scripts/stage.mjs fills with the public files only.
+# Response headers live in _headers and redirects in _redirects, so deploys made by the
+# website admin (netlify/functions/admin.mjs) keep them too.
 [build]
-  publish = "."
-  # Rebuilds the editable sections from content/site.json (runs when Netlify builds from GitHub)
-  command = "node scripts/build.mjs"
+  command = "node scripts/build.mjs && node scripts/stage.mjs"
+  publish = "_site"
 
-[[headers]]
-  for = "/assets/img/*"
-  [headers.values]
-    Cache-Control = "public, max-age=604800"
-
-[[headers]]
-  for = "/*"
-  [headers.values]
-    X-Content-Type-Options = "nosniff"
-    Referrer-Policy = "strict-origin-when-cross-origin"
-    X-Frame-Options = "SAMEORIGIN"
-
-[[headers]]
-  for = "/admin/*"
-  [headers.values]
-    X-Robots-Tag = "noindex, nofollow"
-    Cache-Control = "no-store"
-
-[[headers]]
-  for = "/content/*"
-  [headers.values]
-    Cache-Control = "no-cache"
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"

@@ -6,52 +6,44 @@ The owner edits **clients, services, team, industries and section images** at
 ## How it works
 
 - All editable content lives in `content/site.json`. Uploaded images go to `assets/img/uploads/`.
-- `node scripts/build.mjs` rebuilds the parts of `index.html` and `careers.html` that sit between
+- `scripts/render.mjs` builds the parts of `index.html` and `careers.html` between
   `<!-- cms:… -->` markers. Everything else on the pages stays hand-written.
-- The password is never stored. It unlocks `admin/config.json`, which holds the GitHub
-  connection details in encrypted form.
-- When the owner clicks **Save**, the admin saves the change to the GitHub repository.
-  Netlify (or GitHub Pages) then runs the build and the live site updates in about 1–2 minutes.
+- The admin talks to a Netlify function, `netlify/functions/admin.mjs`. It checks the password
+  (stored only as a PBKDF2 hash in Netlify Blobs) and, on **Save**, publishes a new Netlify
+  deploy: the current site plus the rebuilt pages, the new `content/site.json` and new images.
+  The live site updates within seconds. Every save is a deploy, so an earlier version can be
+  restored from Netlify → Deploys → "Publish deploy". No GitHub is involved.
 
-## 1. Set the password (needed before the admin can be used)
+## Setup (once)
 
-```
-node scripts/admin-setup.mjs
-```
+1. Netlify → avatar → **User settings → Applications → Personal access tokens → New access token**.
+2. In this folder run `node scripts/netlify-admin-setup.mjs`. Paste the token and choose the
+   admin password (both stay hidden). The token is saved as the site's `ADMIN_NETLIFY_TOKEN`
+   setting (functions only).
+3. Deploy once (below) so the function picks up the token.
 
-The script asks for the password twice and needs at least 10 characters. A short sentence
-works well. Run the same command again any time to change the password.
+## Change the password
 
-## 2. Test on this computer
+- In the admin, click **Password** (top right). Everyone logged in is logged out.
+- Forgot it? Run `node scripts/netlify-admin-setup.mjs --password-only` (needs a Netlify token).
 
-```
-node scripts/admin-server.mjs
-```
+## Deploying from this computer — always pull first
 
-Open http://localhost:5181/admin/ and log in. Saves write straight into these files and
-rebuild the pages.
+The owner's edits exist only on Netlify, so a deploy from this folder must pull them first:
 
-## 3. Connect saving to GitHub (live site)
+    npm run deploy
 
-1. Put this folder in a GitHub repository, for example `sysmatica/website`, branch `main`.
-2. On GitHub, go to **Settings → Developer settings → Fine-grained tokens** and create a token:
-   - Repository access: only that repository
-   - Permissions: **Contents: Read and write** (nothing else)
-   - Expiry: as long as you're comfortable with. When it expires, create a new token and
-     run step 3 again.
-3. Run:
-   ```
-   node scripts/admin-setup.mjs --repo OWNER/REPO --branch main
-   ```
-   It asks for the token (paste it; it stays hidden) and the admin password.
-   Commit the new `admin/config.json`.
-4. Hosting:
-   - **Netlify:** link the site to the repository. `netlify.toml` already runs the build.
-   - **GitHub Pages:** add a workflow that runs `node scripts/build.mjs` and then publishes
-     the folder.
+It runs `scripts/pull.mjs` (downloads the live `content/site.json` and new images), rebuilds the
+pages, copies the public files into `_site` and deploys that. Never deploy this folder without
+pulling, or the owner's changes would be undone.
+
+## Test on this computer
+
+`node scripts/admin-server.mjs`, then open http://localhost:5181/admin/ (any password).
+Saves write straight into these files and rebuild the pages.
 
 ## Security notes
 
-- Use a strong password. `admin/config.json` is public, and its strength depends on the
-  password. The token inside it can only edit this one repository's files.
-- Every save is a Git commit, so any change can be seen and undone from the GitHub history.
+- Use a strong password; wrong attempts are slowed down. Logins last 12 hours.
+- The Netlify token can manage the whole Netlify account and is readable only by the site's
+  functions. If it leaks, delete it in Netlify and run the setup again with a new one.

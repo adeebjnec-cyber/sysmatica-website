@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/admin/admin.css?v=1">
+  <link rel="stylesheet" href="/admin/admin.css?v=2">
 </head>
 <body>
   <!-- Login -->
@@ -34,6 +34,7 @@
         <span class="status" id="status"></span>
         <a class="btn btn--ghost" href="/" target="_blank" rel="noopener">View site</a>
         <button class="btn" type="button" id="save" disabled>Save changes</button>
+        <button class="btn btn--ghost" type="button" id="chpw" hidden>Password</button>
         <button class="btn btn--ghost" type="button" id="logout">Log out</button>
       </div>
     </header>
@@ -41,7 +42,19 @@
     <main class="panel" id="panel"></main>
   </div>
 
+  <!-- Change password -->
+  <dialog class="dlg" id="pw-dlg" aria-labelledby="pw-title">
+    <form class="login-card" id="pw-form" autocomplete="off">
+      <h2 id="pw-title">Change admin password</h2>
+      <label class="fld"><span>Current password</span><input type="password" id="pw-cur" required autocomplete="current-password"></label>
+      <label class="fld"><span>New password <span class="hint">— at least 10 characters</span></span><input type="password" id="pw-new" required autocomplete="new-password"></label>
+      <label class="fld"><span>New password again</span><input type="password" id="pw-again" required autocomplete="new-password"></label>
+      <p class="err" id="pw-err" role="alert" hidden></p>
+      <div class="dlg-act"><button class="btn btn--ghost" type="button" id="pw-cancel">Cancel</button><button class="btn" type="submit" id="pw-ok">Change password</button></div>
+    </form>
+  </dialog>
+
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
-  <script src="/admin/admin.js?v=1"></script>
+  <script src="/admin/admin.js?v=2"></script>
 </body>
 </html>
