@@ -98,7 +98,7 @@
           <p class="lead" data-in style="--i:1">We don't list fixed openings here. Name the position you're applying for and your discipline, and we'll be in touch if there's a match with our work.</p>
           <ol class="steps3" data-in style="--i:2">
             <li><span class="n">01</span><div><strong>Fill in your details</strong><p>Tell us about yourself and the role you want.</p></div></li>
-            <li><span class="n">02</span><div><strong>Attach your CV</strong><p>Upload it with the form (PDF or Word) and submit.</p></div></li>
+            <li><span class="n">02</span><div><strong>Share your CV</strong><p>Upload it to Google Drive, OneDrive or Dropbox, set it to &ldquo;anyone with the link&rdquo; and paste the link in the form.</p></div></li>
             <li><span class="n">03</span><div><strong>We review and respond</strong><p>Your application then follows our hiring process above.</p></div></li>
           </ol>
           <dl class="dl" data-in style="--i:3">
@@ -107,7 +107,7 @@
           </dl>
         </div>
         <div class="form glass" data-in style="--i:1">
-          <form class="form-body" name="job-application" method="POST" action="https://formsubmit.co/sales@sysmpl.com" enctype="multipart/form-data" novalidate data-mailto="sales@sysmpl.com" data-subject="Job application"><p class="hp" aria-hidden="true"><label>Leave this empty <input name="_honey" tabindex="-1" autocomplete="off"></label></p>
+          <form class="form-body" name="job-application" method="POST" action="https://api.web3forms.com/submit" novalidate data-mailto="sales@sysmpl.com" data-subject="Job application"><p class="hp" aria-hidden="true"><label>Leave this empty <input name="botcheck" tabindex="-1" autocomplete="off"></label></p>
           <fieldset class="fieldset" data-fade>
           <legend><span class="index">01</span><span class="h3">About you</span></legend>
           <div class="fields">
@@ -171,9 +171,9 @@
           <span class="line"><input id="c-qual" name="qualification" type="text" placeholder="e.g. B.E. Mechanical"></span>
           </div>
           <div class="field field--full">
-          <label for="c-cv">Your CV<span class="req" aria-hidden="true">*</span> <span class="opt">PDF or Word, max 8 MB</span></label>
-          <span class="line"><input id="c-cv" name="cv" type="file" accept=".pdf,.doc,.docx" required data-maxmb="8" aria-describedby="c-cv-e"></span>
-          <p class="error" id="c-cv-e">Please attach your CV (PDF or Word, up to 8 MB).</p>
+          <label for="c-cv">Link to your CV<span class="req" aria-hidden="true">*</span> <span class="opt">Google Drive, OneDrive or Dropbox, shared as &ldquo;anyone with the link&rdquo;</span></label>
+          <span class="line"><input id="c-cv" name="cv_link" type="url" required placeholder="https://" aria-describedby="c-cv-e"></span>
+          <p class="error" id="c-cv-e">Please paste a link to your CV (starting with https://).</p>
           </div>
           <div class="field field--full">
           <label for="c-link">LinkedIn or portfolio<span class="opt">(optional)</span></label>
@@ -205,7 +205,7 @@
           <div class="form-done" role="status">
             <span class="micro c">Application sent</span>
             <h3>Thank you for applying.</h3>
-            <p>Your application and CV have reached our hiring team. If your profile matches an opening, we'll contact you for the next step.</p>
+            <p>Your application has reached our hiring team. If your profile matches an opening, we'll contact you for the next step.</p>
             <div class="actions">
               <button class="btn btn--sm btn--line" type="button" data-edit>Submit another application</button>
             </div>
@@ -226,6 +226,6 @@
   </main>
 
   <script src="assets/js/cinema.js?v=8" defer></script>
-  <script src="assets/js/forms.js?v=8" defer></script>
+  <script src="assets/js/forms.js?v=9" defer></script>
 </body>
 </html>

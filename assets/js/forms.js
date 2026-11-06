@@ -1,8 +1,12 @@
 /* SysMatica — enquiry forms (Contact, Careers)
-   Valid submissions are sent to FormSubmit (formsubmit.co), which emails them to the team.
+   Valid submissions are sent to Web3Forms (web3forms.com), which emails them to sales@sysmpl.com.
    If that request fails, the visitor's email app opens with a pre-filled message instead. */
 (function () {
   'use strict';
+
+  // Web3Forms access key for sales@sysmpl.com (public by design; it can only send to that inbox).
+  // Get one at https://web3forms.com. Leave empty to use the email-app fallback only.
+  var ACCESS_KEY = '';
 
   function labelFor(form, el) {
     if (el.dataset.label) return el.dataset.label;
@@ -64,7 +68,7 @@
       var lines = [];
       var seenGroups = [];
       Array.prototype.forEach.call(form.elements, function (el) {
-        if (!el.name || el.type === 'submit' || el.type === 'hidden' || el.type === 'file' || el.name === 'bot-field' || el === consent) return;
+        if (!el.name || el.type === 'submit' || el.type === 'hidden' || el.type === 'file' || el.name === 'botcheck' || el === consent) return;
         if (el.type === 'checkbox' || el.type === 'radio') {
           var group = el.closest('.chips-field');
           if (!group || seenGroups.indexOf(group) > -1) return;
@@ -101,27 +105,16 @@
         window.location.href = href;
       };
       if (btn) btn.disabled = true;
-      // FormSubmit emails each submission to the address in the form's action.
-      setHidden(form, '_subject', subject);
-      setHidden(form, '_template', 'table');
-      setHidden(form, '_captcha', 'false');
-      if (form.querySelector('input[type="file"]')) {
-        // File uploads only work as a normal form post; FormSubmit then returns the visitor here.
-        setHidden(form, '_next', location.href.split(/[?#]/)[0] + '?sent=' + form.getAttribute('name') + '#' + (form.closest('section') || {}).id);
-        HTMLFormElement.prototype.submit.call(form);
-        return;
-      }
-      fetch(form.action.replace('formsubmit.co/', 'formsubmit.co/ajax/'), { method: 'POST', headers: { Accept: 'application/json' }, body: new FormData(form) })
+      if (!ACCESS_KEY) { fallback(); return; }
+      // Web3Forms emails each submission; replies go to the visitor's "email" field.
+      setHidden(form, 'access_key', ACCESS_KEY);
+      setHidden(form, 'subject', subject);
+      setHidden(form, 'from_name', 'SysMatica website');
+      fetch(form.action, { method: 'POST', headers: { Accept: 'application/json' }, body: new FormData(form) })
         .then(function (r) { return r.json(); })
-        .then(function (j) { if (String(j.success) !== 'true') throw new Error(j.message); if (btn) btn.disabled = false; form.reset(); showDone(); })
+        .then(function (j) { if (!j.success) throw new Error(j.message); if (btn) btn.disabled = false; form.reset(); showDone(); })
         .catch(fallback);
     });
-
-    // Back from FormSubmit after a file upload: show the thank-you message.
-    if (new URLSearchParams(location.search).get('sent') === form.getAttribute('name')) {
-      wrapper.classList.add('is-sent');
-      history.replaceState(null, '', location.pathname + location.hash);
-    }
 
     // "Copy details" fallback for visitors without a mail app.
     var copyBtn = wrapper.querySelector('[data-copy]');
