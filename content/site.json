@@ -78,12 +78,13 @@
           "src": "assets/img/spm-assembly-cut.webp",
           "cut": true,
           "label": "Assembly SPM",
-          "desc": "Sysmatica is company"
+          "desc": "### Assembly SPM – Industrial Automation\n\nA precision-engineered Assembly Special Purpose Machine (SPM) designed to streamline manufacturing operations through efficient, accurate, and consistent assembly processes. Developed to meet specific production requirements, the system enhances productivity, reduces manual intervention, and ensures reliable assembly quality.\n\n**Key Highlights:**\n- Customized assembly automation\n- High precision and repeatability\n- Improved production efficiency\n- Reduced manual labour\n- Consistent product quality\n\n**Industry:** Industrial Manufacturing & Automation"
         },
         {
           "src": "assets/img/spm-leak-test-cut.webp",
           "cut": true,
-          "label": "Leak Testing Machine"
+          "label": "Leak Testing Machine",
+          "desc": "### Leak Testing Machine – Industrial Quality Testing\n\nA precision-engineered Leak Testing Machine designed to identify and detect leakage in manufactured components through reliable and controlled testing processes. Developed to ensure product integrity, maintain quality standards, and minimize the risk of defective components reaching the end customer.\n\n**Key Highlights:**\n- Accurate leak detection and testing\n- Automated testing process\n- Consistent and repeatable results\n- Improved quality control\n- Reduced manual inspection\n- Reliable component integrity verification\n\n**Industry:** Automotive & Industrial Manufacturing"
         }
       ]
     },
