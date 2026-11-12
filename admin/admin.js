@@ -220,14 +220,16 @@
     function draw() {
       box.innerHTML = '';
       s.images.forEach(function (im, i) {
-        var lab = h('input', { type: 'text', placeholder: 'Caption (optional)' }); lab.value = im.label || '';
+        var lab = h('input', { type: 'text', placeholder: 'Image title, e.g. Leak Test SPM' }); lab.value = im.label || '';
         lab.addEventListener('input', function () { if (lab.value.trim()) im.label = lab.value; else delete im.label; changed(); });
+        var dsc = h('textarea', { rows: 3, placeholder: 'Description shown when this image is selected (optional)' }); dsc.value = im.desc || '';
+        dsc.addEventListener('input', function () { if (dsc.value.trim()) im.desc = dsc.value; else delete im.desc; changed(); });
         var cut = h('input', { type: 'checkbox' }); cut.checked = !!im.cut;
         cut.addEventListener('change', function () { im.cut = cut.checked; draw(); changed(); });
         box.appendChild(h('div', { class: 'g' }, [
           h('div', { class: 'pv' + (im.cut ? ' cut' : ''), style: 'background-image:url("' + srcFor(im.thumb || im.src) + '")' }),
           h('label', { class: 'check small' }, [cut, 'Cut-out (transparent background)']),
-          lab,
+          lab, dsc,
           h('div', { class: 'ctrl' }, [
             h('span', {}, [
               h('button', { class: 'icon-btn', type: 'button', title: 'Move left', 'aria-label': 'Move left', disabled: i === 0, onclick: function () { move(s.images, i, -1); draw(); changed(); } }, '←'),
@@ -242,7 +244,7 @@
       } }, '+ Add image'));
     }
     draw();
-    return h('div', { class: 'fld full' }, [h('span', {}, ['Gallery images', h('span', { class: 'hint', text: ' — shown in the pop-up; the first one is the main image' })]), box]);
+    return h('div', { class: 'fld full' }, [h('span', {}, ['Gallery images', h('span', { class: 'hint', text: ' — shown in the pop-up; the first one is the main image. Give each type its own image, title and description.' })]), box]);
   }
   function move(arr, i, d) { var j = i + d; if (j < 0 || j >= arr.length) return; var t = arr[i]; arr[i] = arr[j]; arr[j] = t; }
 
@@ -281,6 +283,30 @@
       wrap.appendChild(h('button', { class: 'btn', type: 'button', onclick: function () { arr.push(cfg.blank()); openIdx = arr.length - 1; draw(); changed(); wrap.lastChild.previousSibling.scrollIntoView({ block: 'center' }); } }, '+ Add ' + cfg.noun));
     }
     draw();
+    return wrap;
+  }
+
+  /* ---------- page texts ---------- */
+  var textFields = null;
+  function loadTextFields() {
+    return fetch('/content/text-fields.json', { cache: 'no-store' }).then(function (r) { return r.ok ? r.json() : []; })
+      .catch(function () { return []; }).then(function (f) { textFields = f; });
+  }
+  var ENT = { '&amp;': '&', '&lt;': '<', '&gt;': '>', '&quot;': '"', '&#39;': "'", '&nbsp;': '\u00a0' };
+  function decode(s) { return String(s).replace(/&(amp|lt|gt|quot|#39|nbsp);/g, function (m) { return ENT[m]; }); }
+  function encode(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+  function plain(s) { return decode(String(s).replace(/<[^>]+>/g, '')); }
+  function pageTextField(f) {
+    var raw = data.text[f.key], rich = /<[a-z!/]/i.test(raw);
+    var long = plain(raw).length > 70;
+    var input = h(long ? 'textarea' : 'input', long ? { rows: Math.min(6, Math.ceil(plain(raw).length / 80) + 1) } : { type: 'text' });
+    input.value = rich ? raw : decode(raw);
+    var wrap = h('label', { class: 'fld full' }, [h('span', {}, [f.label, rich ? h('span', { class: 'hint', text: ' — keep the parts in < > as they are: they style the text' }) : null]), input]);
+    input.addEventListener('input', function () {
+      data.text[f.key] = rich ? input.value : encode(input.value);
+      wrap.classList.toggle('bad', !input.value.trim());
+      changed();
+    });
     return wrap;
   }
 
@@ -347,6 +373,56 @@
         ]; },
       });
     } },
+    facilities: { label: 'Facilities', title: 'Our Facilities', desc: 'Machines and equipment shown in the "Our facilities" section. The section (and its menu link) appears on the website once at least one facility is added.', render: function () {
+      data.facilities = data.facilities || [];
+      return listEditor(data.facilities, {
+        noun: 'facility', photoThumb: true, title: function (f) { return f.name; }, sub: function (f) { return f.desc; }, thumb: function (f) { return f.image; },
+        blank: function () { return { name: '', image: '', desc: '', specs: [] }; },
+        fields: function (f, refresh) { return [
+          textField(f, 'name', 'Machine / facility name', { required: true, full: true, onInput: refresh }),
+          imageField(f, 'image', 'Photo', 'photo', { hint: 'a clear photo of the machine', name: function () { return 'facility-' + f.name; }, onChange: refresh }),
+          textField(f, 'desc', 'Description', { multiline: true, full: true, onInput: refresh }),
+          listField(f, 'specs', 'Key specifications', 'optional, e.g. "Table size: 1000 × 500 mm"'),
+        ]; },
+      });
+    } },
+    text: { label: 'Page text', title: 'Page text', desc: 'Every other wording on the website: headings, paragraphs, buttons, menu, footer, form labels and the Careers page. Search to find a text quickly.', render: function () {
+      var wrap = h('div');
+      if (!textFields) { wrap.appendChild(h('p', { text: 'Loading…' })); loadTextFields().then(function () { if (current === 'text') showSection('text'); }); return wrap; }
+      if (!textFields.length) { wrap.appendChild(h('p', { text: 'The list of page texts could not be loaded. Reload the page and try again.' })); return wrap; }
+      data.text = data.text || {};
+      var q = h('input', { type: 'search', placeholder: 'Search the website text…', class: 'tsearch' });
+      var list = h('div');
+      wrap.appendChild(q); wrap.appendChild(list);
+      var groups = [], byName = {};
+      textFields.forEach(function (f) {
+        if (data.text[f.key] == null) return;
+        var g = f.page + ' · ' + f.group;
+        if (!byName[g]) { byName[g] = { name: g, items: [] }; groups.push(byName[g]); }
+        byName[g].items.push(f);
+      });
+      var openG = {};
+      function draw() {
+        var term = q.value.trim().toLowerCase();
+        list.innerHTML = '';
+        groups.forEach(function (g) {
+          var items = g.items.filter(function (f) { return !term || plain(data.text[f.key]).toLowerCase().indexOf(term) > -1 || f.label.toLowerCase().indexOf(term) > -1; });
+          if (!items.length) return;
+          var isOpen = !!term || openG[g.name];
+          var el = h('div', { class: 'item' + (isOpen ? ' open' : '') });
+          el.appendChild(h('div', { class: 'item-h', onclick: function () { openG[g.name] = !openG[g.name]; draw(); } }, [
+            h('span', { class: 'chev', 'aria-hidden': 'true' }, '›'), h('div', { class: 'ttl' }, [h('b', { text: g.name }), h('span', { text: items.length + ' text' + (items.length > 1 ? 's' : '') })])]));
+          var body = h('div', { class: 'item-b' });
+          if (isOpen) items.forEach(function (f) { body.appendChild(pageTextField(f)); });
+          el.appendChild(body);
+          list.appendChild(el);
+        });
+        if (!list.children.length) list.appendChild(h('p', { text: 'No text matches "' + q.value + '".' }));
+      }
+      var t; q.addEventListener('input', function () { clearTimeout(t); t = setTimeout(draw, 200); });
+      draw();
+      return wrap;
+    } },
     images: { label: 'Section images', title: 'Section images', desc: 'The large photos used in other sections of the website.', render: function () {
       var I = data.images, box = h('div', { class: 'item open' }), body = h('div', { class: 'item-b' });
       [imageField(I.hero, 'src', 'Home page — top banner photo', 'photo', { name: function () { return 'hero'; } }),
@@ -382,6 +458,8 @@
     });
     data.team.forEach(function (m, i) { if (!m.name.trim()) bad.push('Team member ' + (i + 1) + ' has no name'); if (!m.photo) bad.push('Team member "' + m.name + '" has no photo'); });
     data.industries.forEach(function (d, i) { if (!d.name.trim()) bad.push('Industry ' + (i + 1) + ' has no name'); if (!d.image) bad.push('Industry "' + d.name + '" has no photo'); });
+    (data.facilities || []).forEach(function (f, i) { if (!f.name.trim()) bad.push('Facility ' + (i + 1) + ' has no name'); if (!f.image) bad.push('Facility "' + f.name + '" has no photo'); });
+    if (Object.keys(data.text || {}).some(function (k) { return !String(data.text[k]).trim(); })) bad.push('a box under "Page text" is empty (it is outlined in red)');
     return bad;
   }
   async function save() {
@@ -426,7 +504,7 @@
       if (backend.readOnly) { n.hidden = false; n.textContent = 'Saving is not connected yet, so you can look around but changes cannot be saved.'; }
       else if (backend.name === 'this computer') { n.hidden = false; n.textContent = 'Test mode on this computer: saves go into the local files, not the live website.'; }
       Object.keys(SECTIONS).forEach(function (k) { $('#tabs').appendChild(h('button', { type: 'button', role: 'tab', 'data-k': k, onclick: function () { showSection(k); } }, SECTIONS[k].label)); });
-      showSection(current); changed();
+      loadTextFields(); showSection(current); changed();
     } catch (ex) { err.textContent = ex.message; err.hidden = false; }
     btn.disabled = false; btn.textContent = 'Log in';
   });

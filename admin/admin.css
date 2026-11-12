@@ -96,6 +96,8 @@ input:focus, textarea:focus, select:focus { outline: none; border-color: var(--b
 .gal .g .pv { aspect-ratio: 4 / 3; border-radius: 6px; background: #EEF3F9 center / cover no-repeat; }
 .gal .g .pv.cut { background-size: contain; }
 .gal .g .ctrl { display: flex; justify-content: space-between; }
+.gal .g textarea { font: inherit; font-size: .8125rem; resize: vertical; min-height: 64px; }
+.tsearch { width: 100%; margin: 0 0 14px; padding: 11px 14px; font: inherit; border: 1px solid var(--line); border-radius: 10px; }
 .gal .g input[type=text] { padding: 6px 8px; font-size: .8125rem; }
 .gal .add { border: 1px dashed var(--line-2); border-radius: 10px; display: grid; place-items: center; min-height: 170px; color: var(--blue); font-weight: 600; background: #FAFCFE; cursor: pointer; }
 .gal .add:hover { background: #EEF5FC; }

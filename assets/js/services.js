@@ -12,7 +12,10 @@
   function show(i) {
     cur = (i + ids.length) % ids.length;
     prods.forEach(function (p, k) { p.classList.toggle('on', k === cur); });
-    $('#m-count').textContent = ('0' + (cur + 1)).slice(-2) + ' / ' + ('0' + ids.length).slice(-2);
+    $('#m-count').textContent = prods[cur].querySelector('h3').textContent;
+    // always start a service on its first image
+    $$('.m-main img, .m-cap', prods[cur]).forEach(function (el) { el.classList.toggle('on', el.getAttribute('data-k') === '0'); });
+    $$('.m-thumbs button', prods[cur]).forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-k') === '0')); });
     $('#m-scroll').scrollTop = 0;
   }
   function open(id) {
@@ -33,15 +36,11 @@
   $$('[data-svc]').forEach(function (b) { b.addEventListener('click', function () { open(b.getAttribute('data-svc')); }); });
   $('#m-close').addEventListener('click', function () { close(); });
   scrim.addEventListener('click', function () { close(); });
-  $('#m-next').addEventListener('click', function () { show(cur + 1); });
-  $('#m-prev').addEventListener('click', function () { show(cur - 1); });
   $$('[data-close]', box).forEach(function (a) { a.addEventListener('click', function () { close(false); }); });
 
   addEventListener('keydown', function (e) {
     if (!root.classList.contains('m-open')) return;
     if (e.key === 'Escape') close();
-    else if (e.key === 'ArrowRight') show(cur + 1);
-    else if (e.key === 'ArrowLeft') show(cur - 1);
     else if (e.key === 'Tab') { // keep focus inside the panel
       var f = $$('button, a[href]', box).filter(function (el) { return el.offsetParent !== null; });
       if (!f.length) return;
@@ -52,11 +51,12 @@
 
   // gallery thumbnails
   prods.forEach(function (p) {
-    var imgs = $$('.m-main img', p), th = $$('.m-thumbs button', p);
+    var imgs = $$('.m-main img', p), th = $$('.m-thumbs button', p), caps = $$('.m-cap', p);
     th.forEach(function (b) {
       b.addEventListener('click', function () {
         var k = b.getAttribute('data-k');
         imgs.forEach(function (im) { im.classList.toggle('on', im.getAttribute('data-k') === k); });
+        caps.forEach(function (c) { c.classList.toggle('on', c.getAttribute('data-k') === k); });
         th.forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
       });
     });

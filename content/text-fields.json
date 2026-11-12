@@ -1,0 +1,1652 @@
+[
+ {
+  "key": "home.meta.title",
+  "page": "Home page",
+  "group": "Page title & search description",
+  "label": "Browser tab title"
+ },
+ {
+  "key": "home.meta.description",
+  "page": "Home page",
+  "group": "Page title & search description",
+  "label": "Search engine description (Google)"
+ },
+ {
+  "key": "home.page.1",
+  "page": "Home page",
+  "group": "Skip link",
+  "label": "Link for keyboard users (hidden until focused)"
+ },
+ {
+  "key": "common.menu.home",
+  "page": "All pages",
+  "group": "Menu (all pages)",
+  "label": "Link text"
+ },
+ {
+  "key": "common.menu.about",
+  "page": "All pages",
+  "group": "Menu (all pages)",
+  "label": "Link text"
+ },
+ {
+  "key": "common.menu.team",
+  "page": "All pages",
+  "group": "Menu (all pages)",
+  "label": "Link text"
+ },
+ {
+  "key": "common.menu.services",
+  "page": "All pages",
+  "group": "Menu (all pages)",
+  "label": "Link text"
+ },
+ {
+  "key": "common.menu.capabilities",
+  "page": "All pages",
+  "group": "Menu (all pages)",
+  "label": "Link text"
+ },
+ {
+  "key": "common.menu.facilities",
+  "page": "All pages",
+  "group": "Menu (all pages)",
+  "label": "Link text"
+ },
+ {
+  "key": "common.menu.careers",
+  "page": "All pages",
+  "group": "Menu (all pages)",
+  "label": "Link text"
+ },
+ {
+  "key": "common.menu.clients",
+  "page": "All pages",
+  "group": "Menu (all pages)",
+  "label": "Link text"
+ },
+ {
+  "key": "common.menu.contact",
+  "page": "All pages",
+  "group": "Menu (all pages)",
+  "label": "Link text"
+ },
+ {
+  "key": "common.menu.enquire",
+  "page": "All pages",
+  "group": "Menu (all pages)",
+  "label": "Button"
+ },
+ {
+  "key": "common.menu.menu",
+  "page": "All pages",
+  "group": "Menu (all pages)",
+  "label": "Text"
+ },
+ {
+  "key": "common.menu.01home",
+  "page": "All pages",
+  "group": "Menu (all pages)",
+  "label": "Link text"
+ },
+ {
+  "key": "common.menu.02about",
+  "page": "All pages",
+  "group": "Menu (all pages)",
+  "label": "Link text"
+ },
+ {
+  "key": "common.menu.03team",
+  "page": "All pages",
+  "group": "Menu (all pages)",
+  "label": "Link text"
+ },
+ {
+  "key": "common.menu.04services",
+  "page": "All pages",
+  "group": "Menu (all pages)",
+  "label": "Link text"
+ },
+ {
+  "key": "common.menu.05capabilities",
+  "page": "All pages",
+  "group": "Menu (all pages)",
+  "label": "Link text"
+ },
+ {
+  "key": "common.menu.06facilities",
+  "page": "All pages",
+  "group": "Menu (all pages)",
+  "label": "Link text"
+ },
+ {
+  "key": "common.menu.07careers",
+  "page": "All pages",
+  "group": "Menu (all pages)",
+  "label": "Link text"
+ },
+ {
+  "key": "common.menu.08clients",
+  "page": "All pages",
+  "group": "Menu (all pages)",
+  "label": "Link text"
+ },
+ {
+  "key": "common.menu.09contact",
+  "page": "All pages",
+  "group": "Menu (all pages)",
+  "label": "Link text"
+ },
+ {
+  "key": "common.menu.sales-sysmpl-com",
+  "page": "All pages",
+  "group": "Menu (all pages)",
+  "label": "Button"
+ },
+ {
+  "key": "home.top.1",
+  "page": "Home page",
+  "group": "Home",
+  "label": "Small label"
+ },
+ {
+  "key": "home.top.2",
+  "page": "Home page",
+  "group": "Home",
+  "label": "Text"
+ },
+ {
+  "key": "home.top.3",
+  "page": "Home page",
+  "group": "Home",
+  "label": "Text"
+ },
+ {
+  "key": "home.top.4",
+  "page": "Home page",
+  "group": "Home",
+  "label": "Text"
+ },
+ {
+  "key": "home.top.5",
+  "page": "Home page",
+  "group": "Home",
+  "label": "Paragraph"
+ },
+ {
+  "key": "home.top.6",
+  "page": "Home page",
+  "group": "Home",
+  "label": "Button"
+ },
+ {
+  "key": "home.top.7",
+  "page": "Home page",
+  "group": "Home",
+  "label": "Button"
+ },
+ {
+  "key": "home.top.8",
+  "page": "Home page",
+  "group": "Home",
+  "label": "Text"
+ },
+ {
+  "key": "home.about.1",
+  "page": "Home page",
+  "group": "About",
+  "label": "Small label"
+ },
+ {
+  "key": "home.about.2",
+  "page": "Home page",
+  "group": "About",
+  "label": "Paragraph"
+ },
+ {
+  "key": "home.about.3",
+  "page": "Home page",
+  "group": "About",
+  "label": "Paragraph"
+ },
+ {
+  "key": "home.about.4",
+  "page": "Home page",
+  "group": "About",
+  "label": "Main heading"
+ },
+ {
+  "key": "home.about.5",
+  "page": "Home page",
+  "group": "About",
+  "label": "Paragraph"
+ },
+ {
+  "key": "home.about.6",
+  "page": "Home page",
+  "group": "About",
+  "label": "Paragraph"
+ },
+ {
+  "key": "home.about.7",
+  "page": "Home page",
+  "group": "About",
+  "label": "Paragraph"
+ },
+ {
+  "key": "home.about.8",
+  "page": "Home page",
+  "group": "About",
+  "label": "List item"
+ },
+ {
+  "key": "home.about.9",
+  "page": "Home page",
+  "group": "About",
+  "label": "List item"
+ },
+ {
+  "key": "home.about.10",
+  "page": "Home page",
+  "group": "About",
+  "label": "List item"
+ },
+ {
+  "key": "home.about.11",
+  "page": "Home page",
+  "group": "About",
+  "label": "List item"
+ },
+ {
+  "key": "home.about.12",
+  "page": "Home page",
+  "group": "About",
+  "label": "List item"
+ },
+ {
+  "key": "home.about.13",
+  "page": "Home page",
+  "group": "About",
+  "label": "List item"
+ },
+ {
+  "key": "home.about.14",
+  "page": "Home page",
+  "group": "About",
+  "label": "Text"
+ },
+ {
+  "key": "home.about.15",
+  "page": "Home page",
+  "group": "About",
+  "label": "Small label"
+ },
+ {
+  "key": "home.about.16",
+  "page": "Home page",
+  "group": "About",
+  "label": "Small label"
+ },
+ {
+  "key": "home.about.17",
+  "page": "Home page",
+  "group": "About",
+  "label": "Text"
+ },
+ {
+  "key": "home.about.18",
+  "page": "Home page",
+  "group": "About",
+  "label": "Small label"
+ },
+ {
+  "key": "home.about.19",
+  "page": "Home page",
+  "group": "About",
+  "label": "Text"
+ },
+ {
+  "key": "home.about.20",
+  "page": "Home page",
+  "group": "About",
+  "label": "Small label"
+ },
+ {
+  "key": "home.about.21",
+  "page": "Home page",
+  "group": "About",
+  "label": "Text"
+ },
+ {
+  "key": "home.about.22",
+  "page": "Home page",
+  "group": "About",
+  "label": "Small label"
+ },
+ {
+  "key": "home.about.23",
+  "page": "Home page",
+  "group": "About",
+  "label": "Text"
+ },
+ {
+  "key": "home.about.24",
+  "page": "Home page",
+  "group": "About",
+  "label": "Heading"
+ },
+ {
+  "key": "home.about.25",
+  "page": "Home page",
+  "group": "About",
+  "label": "Paragraph"
+ },
+ {
+  "key": "home.about.26",
+  "page": "Home page",
+  "group": "About",
+  "label": "Text"
+ },
+ {
+  "key": "home.about.27",
+  "page": "Home page",
+  "group": "About",
+  "label": "Heading"
+ },
+ {
+  "key": "home.about.28",
+  "page": "Home page",
+  "group": "About",
+  "label": "Paragraph"
+ },
+ {
+  "key": "home.about.29",
+  "page": "Home page",
+  "group": "About",
+  "label": "Small label"
+ },
+ {
+  "key": "home.about.30",
+  "page": "Home page",
+  "group": "About",
+  "label": "Main heading"
+ },
+ {
+  "key": "home.about.31",
+  "page": "Home page",
+  "group": "About",
+  "label": "Text"
+ },
+ {
+  "key": "home.about.32",
+  "page": "Home page",
+  "group": "About",
+  "label": "Text"
+ },
+ {
+  "key": "home.about.33",
+  "page": "Home page",
+  "group": "About",
+  "label": "Text"
+ },
+ {
+  "key": "home.about.34",
+  "page": "Home page",
+  "group": "About",
+  "label": "Text"
+ },
+ {
+  "key": "home.about.35",
+  "page": "Home page",
+  "group": "About",
+  "label": "Text"
+ },
+ {
+  "key": "home.about.36",
+  "page": "Home page",
+  "group": "About",
+  "label": "Text"
+ },
+ {
+  "key": "home.about.37",
+  "page": "Home page",
+  "group": "About",
+  "label": "Text"
+ },
+ {
+  "key": "home.about.38",
+  "page": "Home page",
+  "group": "About",
+  "label": "Text"
+ },
+ {
+  "key": "home.about.39",
+  "page": "Home page",
+  "group": "About",
+  "label": "Text"
+ },
+ {
+  "key": "home.about.40",
+  "page": "Home page",
+  "group": "About",
+  "label": "Text"
+ },
+ {
+  "key": "home.about.41",
+  "page": "Home page",
+  "group": "About",
+  "label": "Small label"
+ },
+ {
+  "key": "home.about.42",
+  "page": "Home page",
+  "group": "About",
+  "label": "List item"
+ },
+ {
+  "key": "home.about.43",
+  "page": "Home page",
+  "group": "About",
+  "label": "List item"
+ },
+ {
+  "key": "home.about.44",
+  "page": "Home page",
+  "group": "About",
+  "label": "List item"
+ },
+ {
+  "key": "home.about.45",
+  "page": "Home page",
+  "group": "About",
+  "label": "List item"
+ },
+ {
+  "key": "home.about.46",
+  "page": "Home page",
+  "group": "About",
+  "label": "List item"
+ },
+ {
+  "key": "home.about.47",
+  "page": "Home page",
+  "group": "About",
+  "label": "List item"
+ },
+ {
+  "key": "home.about.48",
+  "page": "Home page",
+  "group": "About",
+  "label": "List item"
+ },
+ {
+  "key": "home.about.49",
+  "page": "Home page",
+  "group": "About",
+  "label": "List item"
+ },
+ {
+  "key": "home.about.50",
+  "page": "Home page",
+  "group": "About",
+  "label": "List item"
+ },
+ {
+  "key": "home.about.51",
+  "page": "Home page",
+  "group": "About",
+  "label": "List item"
+ },
+ {
+  "key": "home.about.52",
+  "page": "Home page",
+  "group": "About",
+  "label": "List item"
+ },
+ {
+  "key": "home.about.53",
+  "page": "Home page",
+  "group": "About",
+  "label": "List item"
+ },
+ {
+  "key": "home.about.54",
+  "page": "Home page",
+  "group": "About",
+  "label": "List item"
+ },
+ {
+  "key": "home.about.55",
+  "page": "Home page",
+  "group": "About",
+  "label": "List item"
+ },
+ {
+  "key": "home.about.56",
+  "page": "Home page",
+  "group": "About",
+  "label": "Small label"
+ },
+ {
+  "key": "home.about.57",
+  "page": "Home page",
+  "group": "About",
+  "label": "Text"
+ },
+ {
+  "key": "home.about.58",
+  "page": "Home page",
+  "group": "About",
+  "label": "Text"
+ },
+ {
+  "key": "home.about.59",
+  "page": "Home page",
+  "group": "About",
+  "label": "Text"
+ },
+ {
+  "key": "home.about.60",
+  "page": "Home page",
+  "group": "About",
+  "label": "Text"
+ },
+ {
+  "key": "home.about.61",
+  "page": "Home page",
+  "group": "About",
+  "label": "Text"
+ },
+ {
+  "key": "home.about.62",
+  "page": "Home page",
+  "group": "About",
+  "label": "Text"
+ },
+ {
+  "key": "home.about.63",
+  "page": "Home page",
+  "group": "About",
+  "label": "Text"
+ },
+ {
+  "key": "home.about.64",
+  "page": "Home page",
+  "group": "About",
+  "label": "Text"
+ },
+ {
+  "key": "home.about.65",
+  "page": "Home page",
+  "group": "About",
+  "label": "Text"
+ },
+ {
+  "key": "home.about.66",
+  "page": "Home page",
+  "group": "About",
+  "label": "Text"
+ },
+ {
+  "key": "home.about.67",
+  "page": "Home page",
+  "group": "About",
+  "label": "Text"
+ },
+ {
+  "key": "home.about.68",
+  "page": "Home page",
+  "group": "About",
+  "label": "Text"
+ },
+ {
+  "key": "home.about.69",
+  "page": "Home page",
+  "group": "About",
+  "label": "Text"
+ },
+ {
+  "key": "home.about.70",
+  "page": "Home page",
+  "group": "About",
+  "label": "Text"
+ },
+ {
+  "key": "home.about.71",
+  "page": "Home page",
+  "group": "About",
+  "label": "Text"
+ },
+ {
+  "key": "home.about.72",
+  "page": "Home page",
+  "group": "About",
+  "label": "Text"
+ },
+ {
+  "key": "home.about.73",
+  "page": "Home page",
+  "group": "About",
+  "label": "Text"
+ },
+ {
+  "key": "home.about.74",
+  "page": "Home page",
+  "group": "About",
+  "label": "Text"
+ },
+ {
+  "key": "home.team.1",
+  "page": "Home page",
+  "group": "Team",
+  "label": "Small label"
+ },
+ {
+  "key": "home.team.2",
+  "page": "Home page",
+  "group": "Team",
+  "label": "Main heading"
+ },
+ {
+  "key": "home.team.3",
+  "page": "Home page",
+  "group": "Team",
+  "label": "Paragraph"
+ },
+ {
+  "key": "home.services.1",
+  "page": "Home page",
+  "group": "Services",
+  "label": "Small label"
+ },
+ {
+  "key": "home.services.2",
+  "page": "Home page",
+  "group": "Services",
+  "label": "Main heading"
+ },
+ {
+  "key": "home.services.3",
+  "page": "Home page",
+  "group": "Services",
+  "label": "Paragraph"
+ },
+ {
+  "key": "home.capabilities.1",
+  "page": "Home page",
+  "group": "Industries",
+  "label": "Main heading"
+ },
+ {
+  "key": "home.capabilities.2",
+  "page": "Home page",
+  "group": "Industries",
+  "label": "Paragraph"
+ },
+ {
+  "key": "home.process.1",
+  "page": "Home page",
+  "group": "Process",
+  "label": "Main heading"
+ },
+ {
+  "key": "home.process.2",
+  "page": "Home page",
+  "group": "Process",
+  "label": "Paragraph"
+ },
+ {
+  "key": "home.process.3",
+  "page": "Home page",
+  "group": "Process",
+  "label": "Text"
+ },
+ {
+  "key": "home.process.4",
+  "page": "Home page",
+  "group": "Process",
+  "label": "Heading"
+ },
+ {
+  "key": "home.process.5",
+  "page": "Home page",
+  "group": "Process",
+  "label": "Paragraph"
+ },
+ {
+  "key": "home.process.6",
+  "page": "Home page",
+  "group": "Process",
+  "label": "Text"
+ },
+ {
+  "key": "home.process.7",
+  "page": "Home page",
+  "group": "Process",
+  "label": "Heading"
+ },
+ {
+  "key": "home.process.8",
+  "page": "Home page",
+  "group": "Process",
+  "label": "Paragraph"
+ },
+ {
+  "key": "home.process.9",
+  "page": "Home page",
+  "group": "Process",
+  "label": "Text"
+ },
+ {
+  "key": "home.process.10",
+  "page": "Home page",
+  "group": "Process",
+  "label": "Heading"
+ },
+ {
+  "key": "home.process.11",
+  "page": "Home page",
+  "group": "Process",
+  "label": "Paragraph"
+ },
+ {
+  "key": "home.process.12",
+  "page": "Home page",
+  "group": "Process",
+  "label": "Text"
+ },
+ {
+  "key": "home.process.13",
+  "page": "Home page",
+  "group": "Process",
+  "label": "Heading"
+ },
+ {
+  "key": "home.process.14",
+  "page": "Home page",
+  "group": "Process",
+  "label": "Paragraph"
+ },
+ {
+  "key": "home.process.15",
+  "page": "Home page",
+  "group": "Process",
+  "label": "Text"
+ },
+ {
+  "key": "home.process.16",
+  "page": "Home page",
+  "group": "Process",
+  "label": "Text"
+ },
+ {
+  "key": "home.process.17",
+  "page": "Home page",
+  "group": "Process",
+  "label": "Text"
+ },
+ {
+  "key": "home.process.18",
+  "page": "Home page",
+  "group": "Process",
+  "label": "Text"
+ },
+ {
+  "key": "home.facilities.1",
+  "page": "Home page",
+  "group": "Facilities",
+  "label": "Small label"
+ },
+ {
+  "key": "home.facilities.2",
+  "page": "Home page",
+  "group": "Facilities",
+  "label": "Main heading"
+ },
+ {
+  "key": "home.facilities.3",
+  "page": "Home page",
+  "group": "Facilities",
+  "label": "Paragraph"
+ },
+ {
+  "key": "home.clients.1",
+  "page": "Home page",
+  "group": "Clients",
+  "label": "Small label"
+ },
+ {
+  "key": "home.clients.2",
+  "page": "Home page",
+  "group": "Clients",
+  "label": "Main heading"
+ },
+ {
+  "key": "home.clients.3",
+  "page": "Home page",
+  "group": "Clients",
+  "label": "Paragraph"
+ },
+ {
+  "key": "home.contact.1",
+  "page": "Home page",
+  "group": "Contact",
+  "label": "Small label"
+ },
+ {
+  "key": "home.contact.2",
+  "page": "Home page",
+  "group": "Contact",
+  "label": "Main heading"
+ },
+ {
+  "key": "home.contact.3",
+  "page": "Home page",
+  "group": "Contact",
+  "label": "Paragraph"
+ },
+ {
+  "key": "home.contact.4",
+  "page": "Home page",
+  "group": "Contact",
+  "label": "Small label"
+ },
+ {
+  "key": "home.contact.5",
+  "page": "Home page",
+  "group": "Contact",
+  "label": "Link text"
+ },
+ {
+  "key": "home.contact.6",
+  "page": "Home page",
+  "group": "Contact",
+  "label": "Small label"
+ },
+ {
+  "key": "home.contact.7",
+  "page": "Home page",
+  "group": "Contact",
+  "label": "Link text"
+ },
+ {
+  "key": "home.contact.8",
+  "page": "Home page",
+  "group": "Contact",
+  "label": "Small label"
+ },
+ {
+  "key": "home.contact.9",
+  "page": "Home page",
+  "group": "Contact",
+  "label": "Text"
+ },
+ {
+  "key": "home.contact.10",
+  "page": "Home page",
+  "group": "Contact",
+  "label": "Form label"
+ },
+ {
+  "key": "home.contact.11",
+  "page": "Home page",
+  "group": "Contact",
+  "label": "Heading"
+ },
+ {
+  "key": "home.contact.12",
+  "page": "Home page",
+  "group": "Contact",
+  "label": "Paragraph"
+ },
+ {
+  "key": "home.contact.13",
+  "page": "Home page",
+  "group": "Contact",
+  "label": "Form label"
+ },
+ {
+  "key": "home.contact.14",
+  "page": "Home page",
+  "group": "Contact",
+  "label": "Paragraph"
+ },
+ {
+  "key": "home.contact.15",
+  "page": "Home page",
+  "group": "Contact",
+  "label": "Form label"
+ },
+ {
+  "key": "home.contact.16",
+  "page": "Home page",
+  "group": "Contact",
+  "label": "Paragraph"
+ },
+ {
+  "key": "home.contact.17",
+  "page": "Home page",
+  "group": "Contact",
+  "label": "Form label"
+ },
+ {
+  "key": "home.contact.18",
+  "page": "Home page",
+  "group": "Contact",
+  "label": "Paragraph"
+ },
+ {
+  "key": "home.contact.19",
+  "page": "Home page",
+  "group": "Contact",
+  "label": "Form label"
+ },
+ {
+  "key": "home.contact.20",
+  "page": "Home page",
+  "group": "Contact",
+  "label": "Form label"
+ },
+ {
+  "key": "home.contact.21",
+  "page": "Home page",
+  "group": "Contact",
+  "label": "Paragraph"
+ },
+ {
+  "key": "home.contact.22",
+  "page": "Home page",
+  "group": "Contact",
+  "label": "Form label"
+ },
+ {
+  "key": "home.contact.23",
+  "page": "Home page",
+  "group": "Contact",
+  "label": "Paragraph"
+ },
+ {
+  "key": "home.contact.24",
+  "page": "Home page",
+  "group": "Contact",
+  "label": "Form label"
+ },
+ {
+  "key": "home.contact.25",
+  "page": "Home page",
+  "group": "Contact",
+  "label": "Paragraph"
+ },
+ {
+  "key": "home.contact.26",
+  "page": "Home page",
+  "group": "Contact",
+  "label": "Paragraph"
+ },
+ {
+  "key": "home.contact.27",
+  "page": "Home page",
+  "group": "Contact",
+  "label": "Button"
+ },
+ {
+  "key": "home.contact.28",
+  "page": "Home page",
+  "group": "Contact",
+  "label": "Small label"
+ },
+ {
+  "key": "home.contact.29",
+  "page": "Home page",
+  "group": "Contact",
+  "label": "Heading"
+ },
+ {
+  "key": "home.contact.30",
+  "page": "Home page",
+  "group": "Contact",
+  "label": "Paragraph"
+ },
+ {
+  "key": "home.contact.31",
+  "page": "Home page",
+  "group": "Contact",
+  "label": "Paragraph"
+ },
+ {
+  "key": "home.contact.32",
+  "page": "Home page",
+  "group": "Contact",
+  "label": "Button"
+ },
+ {
+  "key": "common.footer.about",
+  "page": "All pages",
+  "group": "Footer (all pages)",
+  "label": "Link text"
+ },
+ {
+  "key": "common.footer.team",
+  "page": "All pages",
+  "group": "Footer (all pages)",
+  "label": "Link text"
+ },
+ {
+  "key": "common.footer.services",
+  "page": "All pages",
+  "group": "Footer (all pages)",
+  "label": "Link text"
+ },
+ {
+  "key": "common.footer.industries",
+  "page": "All pages",
+  "group": "Footer (all pages)",
+  "label": "Link text"
+ },
+ {
+  "key": "common.footer.facilities",
+  "page": "All pages",
+  "group": "Footer (all pages)",
+  "label": "Link text"
+ },
+ {
+  "key": "common.footer.careers",
+  "page": "All pages",
+  "group": "Footer (all pages)",
+  "label": "Link text"
+ },
+ {
+  "key": "common.footer.clients",
+  "page": "All pages",
+  "group": "Footer (all pages)",
+  "label": "Link text"
+ },
+ {
+  "key": "common.footer.contact",
+  "page": "All pages",
+  "group": "Footer (all pages)",
+  "label": "Link text"
+ },
+ {
+  "key": "common.footer.2026-sysmatica-mechatronics-pvt-",
+  "page": "All pages",
+  "group": "Footer (all pages)",
+  "label": "Text"
+ },
+ {
+  "key": "careers.meta.title",
+  "page": "Careers page",
+  "group": "Page title & search description",
+  "label": "Browser tab title"
+ },
+ {
+  "key": "careers.meta.description",
+  "page": "Careers page",
+  "group": "Page title & search description",
+  "label": "Search engine description (Google)"
+ },
+ {
+  "key": "careers.page.1",
+  "page": "Careers page",
+  "group": "Skip link",
+  "label": "Link for keyboard users (hidden until focused)"
+ },
+ {
+  "key": "common.menu.apply",
+  "page": "All pages",
+  "group": "Menu (all pages)",
+  "label": "Button"
+ },
+ {
+  "key": "careers.top.1",
+  "page": "Careers page",
+  "group": "Careers",
+  "label": "Small label"
+ },
+ {
+  "key": "careers.top.2",
+  "page": "Careers page",
+  "group": "Careers",
+  "label": "Text"
+ },
+ {
+  "key": "careers.top.3",
+  "page": "Careers page",
+  "group": "Careers",
+  "label": "Text"
+ },
+ {
+  "key": "careers.top.4",
+  "page": "Careers page",
+  "group": "Careers",
+  "label": "Text"
+ },
+ {
+  "key": "careers.top.5",
+  "page": "Careers page",
+  "group": "Careers",
+  "label": "Paragraph"
+ },
+ {
+  "key": "careers.top.6",
+  "page": "Careers page",
+  "group": "Careers",
+  "label": "Button"
+ },
+ {
+  "key": "careers.top.7",
+  "page": "Careers page",
+  "group": "Careers",
+  "label": "Button"
+ },
+ {
+  "key": "careers.hiring.1",
+  "page": "Careers page",
+  "group": "Hiring process",
+  "label": "Small label"
+ },
+ {
+  "key": "careers.hiring.2",
+  "page": "Careers page",
+  "group": "Hiring process",
+  "label": "Main heading"
+ },
+ {
+  "key": "careers.hiring.3",
+  "page": "Careers page",
+  "group": "Hiring process",
+  "label": "Paragraph"
+ },
+ {
+  "key": "careers.hiring.4",
+  "page": "Careers page",
+  "group": "Hiring process",
+  "label": "Text"
+ },
+ {
+  "key": "careers.hiring.5",
+  "page": "Careers page",
+  "group": "Hiring process",
+  "label": "Heading"
+ },
+ {
+  "key": "careers.hiring.6",
+  "page": "Careers page",
+  "group": "Hiring process",
+  "label": "Paragraph"
+ },
+ {
+  "key": "careers.hiring.7",
+  "page": "Careers page",
+  "group": "Hiring process",
+  "label": "Text"
+ },
+ {
+  "key": "careers.hiring.8",
+  "page": "Careers page",
+  "group": "Hiring process",
+  "label": "Heading"
+ },
+ {
+  "key": "careers.hiring.9",
+  "page": "Careers page",
+  "group": "Hiring process",
+  "label": "Paragraph"
+ },
+ {
+  "key": "careers.hiring.10",
+  "page": "Careers page",
+  "group": "Hiring process",
+  "label": "Text"
+ },
+ {
+  "key": "careers.hiring.11",
+  "page": "Careers page",
+  "group": "Hiring process",
+  "label": "Heading"
+ },
+ {
+  "key": "careers.hiring.12",
+  "page": "Careers page",
+  "group": "Hiring process",
+  "label": "Paragraph"
+ },
+ {
+  "key": "careers.hiring.13",
+  "page": "Careers page",
+  "group": "Hiring process",
+  "label": "Text"
+ },
+ {
+  "key": "careers.hiring.14",
+  "page": "Careers page",
+  "group": "Hiring process",
+  "label": "Heading"
+ },
+ {
+  "key": "careers.hiring.15",
+  "page": "Careers page",
+  "group": "Hiring process",
+  "label": "Paragraph"
+ },
+ {
+  "key": "careers.hiring.16",
+  "page": "Careers page",
+  "group": "Hiring process",
+  "label": "Text"
+ },
+ {
+  "key": "careers.hiring.17",
+  "page": "Careers page",
+  "group": "Hiring process",
+  "label": "Heading"
+ },
+ {
+  "key": "careers.hiring.18",
+  "page": "Careers page",
+  "group": "Hiring process",
+  "label": "Paragraph"
+ },
+ {
+  "key": "careers.apply.1",
+  "page": "Careers page",
+  "group": "Apply",
+  "label": "Small label"
+ },
+ {
+  "key": "careers.apply.2",
+  "page": "Careers page",
+  "group": "Apply",
+  "label": "Main heading"
+ },
+ {
+  "key": "careers.apply.3",
+  "page": "Careers page",
+  "group": "Apply",
+  "label": "Paragraph"
+ },
+ {
+  "key": "careers.apply.4",
+  "page": "Careers page",
+  "group": "Apply",
+  "label": "Text"
+ },
+ {
+  "key": "careers.apply.5",
+  "page": "Careers page",
+  "group": "Apply",
+  "label": "Text"
+ },
+ {
+  "key": "careers.apply.6",
+  "page": "Careers page",
+  "group": "Apply",
+  "label": "Paragraph"
+ },
+ {
+  "key": "careers.apply.7",
+  "page": "Careers page",
+  "group": "Apply",
+  "label": "Text"
+ },
+ {
+  "key": "careers.apply.8",
+  "page": "Careers page",
+  "group": "Apply",
+  "label": "Text"
+ },
+ {
+  "key": "careers.apply.9",
+  "page": "Careers page",
+  "group": "Apply",
+  "label": "Paragraph"
+ },
+ {
+  "key": "careers.apply.10",
+  "page": "Careers page",
+  "group": "Apply",
+  "label": "Text"
+ },
+ {
+  "key": "careers.apply.11",
+  "page": "Careers page",
+  "group": "Apply",
+  "label": "Text"
+ },
+ {
+  "key": "careers.apply.12",
+  "page": "Careers page",
+  "group": "Apply",
+  "label": "Paragraph"
+ },
+ {
+  "key": "careers.apply.13",
+  "page": "Careers page",
+  "group": "Apply",
+  "label": "Small label"
+ },
+ {
+  "key": "careers.apply.14",
+  "page": "Careers page",
+  "group": "Apply",
+  "label": "Link text"
+ },
+ {
+  "key": "careers.apply.15",
+  "page": "Careers page",
+  "group": "Apply",
+  "label": "Small label"
+ },
+ {
+  "key": "careers.apply.16",
+  "page": "Careers page",
+  "group": "Apply",
+  "label": "Link text"
+ },
+ {
+  "key": "careers.apply.17",
+  "page": "Careers page",
+  "group": "Apply",
+  "label": "Form label"
+ },
+ {
+  "key": "careers.apply.18",
+  "page": "Careers page",
+  "group": "Apply",
+  "label": "Text"
+ },
+ {
+  "key": "careers.apply.19",
+  "page": "Careers page",
+  "group": "Apply",
+  "label": "Text"
+ },
+ {
+  "key": "careers.apply.20",
+  "page": "Careers page",
+  "group": "Apply",
+  "label": "Form label"
+ },
+ {
+  "key": "careers.apply.21",
+  "page": "Careers page",
+  "group": "Apply",
+  "label": "Paragraph"
+ },
+ {
+  "key": "careers.apply.22",
+  "page": "Careers page",
+  "group": "Apply",
+  "label": "Form label"
+ },
+ {
+  "key": "careers.apply.23",
+  "page": "Careers page",
+  "group": "Apply",
+  "label": "Paragraph"
+ },
+ {
+  "key": "careers.apply.24",
+  "page": "Careers page",
+  "group": "Apply",
+  "label": "Form label"
+ },
+ {
+  "key": "careers.apply.25",
+  "page": "Careers page",
+  "group": "Apply",
+  "label": "Paragraph"
+ },
+ {
+  "key": "careers.apply.26",
+  "page": "Careers page",
+  "group": "Apply",
+  "label": "Form label"
+ },
+ {
+  "key": "careers.apply.27",
+  "page": "Careers page",
+  "group": "Apply",
+  "label": "Text"
+ },
+ {
+  "key": "careers.apply.28",
+  "page": "Careers page",
+  "group": "Apply",
+  "label": "Text"
+ },
+ {
+  "key": "careers.apply.29",
+  "page": "Careers page",
+  "group": "Apply",
+  "label": "Form label"
+ },
+ {
+  "key": "careers.apply.30",
+  "page": "Careers page",
+  "group": "Apply",
+  "label": "Paragraph"
+ },
+ {
+  "key": "careers.apply.31",
+  "page": "Careers page",
+  "group": "Apply",
+  "label": "Form section title"
+ },
+ {
+  "key": "careers.apply.32",
+  "page": "Careers page",
+  "group": "Apply",
+  "label": "Text"
+ },
+ {
+  "key": "careers.apply.33",
+  "page": "Careers page",
+  "group": "Apply",
+  "label": "Text"
+ },
+ {
+  "key": "careers.apply.34",
+  "page": "Careers page",
+  "group": "Apply",
+  "label": "Text"
+ },
+ {
+  "key": "careers.apply.35",
+  "page": "Careers page",
+  "group": "Apply",
+  "label": "Text"
+ },
+ {
+  "key": "careers.apply.36",
+  "page": "Careers page",
+  "group": "Apply",
+  "label": "Text"
+ },
+ {
+  "key": "careers.apply.37",
+  "page": "Careers page",
+  "group": "Apply",
+  "label": "Text"
+ },
+ {
+  "key": "careers.apply.38",
+  "page": "Careers page",
+  "group": "Apply",
+  "label": "Text"
+ },
+ {
+  "key": "careers.apply.39",
+  "page": "Careers page",
+  "group": "Apply",
+  "label": "Text"
+ },
+ {
+  "key": "careers.apply.40",
+  "page": "Careers page",
+  "group": "Apply",
+  "label": "Paragraph"
+ },
+ {
+  "key": "careers.apply.41",
+  "page": "Careers page",
+  "group": "Apply",
+  "label": "Form label"
+ },
+ {
+  "key": "careers.apply.42",
+  "page": "Careers page",
+  "group": "Apply",
+  "label": "Paragraph"
+ },
+ {
+  "key": "careers.apply.43",
+  "page": "Careers page",
+  "group": "Apply",
+  "label": "Form label"
+ },
+ {
+  "key": "careers.apply.44",
+  "page": "Careers page",
+  "group": "Apply",
+  "label": "Form label"
+ },
+ {
+  "key": "careers.apply.45",
+  "page": "Careers page",
+  "group": "Apply",
+  "label": "Paragraph"
+ },
+ {
+  "key": "careers.apply.46",
+  "page": "Careers page",
+  "group": "Apply",
+  "label": "Form label"
+ },
+ {
+  "key": "careers.apply.47",
+  "page": "Careers page",
+  "group": "Apply",
+  "label": "Paragraph"
+ },
+ {
+  "key": "careers.apply.48",
+  "page": "Careers page",
+  "group": "Apply",
+  "label": "Text"
+ },
+ {
+  "key": "careers.apply.49",
+  "page": "Careers page",
+  "group": "Apply",
+  "label": "Text"
+ },
+ {
+  "key": "careers.apply.50",
+  "page": "Careers page",
+  "group": "Apply",
+  "label": "Form label"
+ },
+ {
+  "key": "careers.apply.51",
+  "page": "Careers page",
+  "group": "Apply",
+  "label": "Form label"
+ },
+ {
+  "key": "careers.apply.52",
+  "page": "Careers page",
+  "group": "Apply",
+  "label": "Paragraph"
+ },
+ {
+  "key": "careers.apply.53",
+  "page": "Careers page",
+  "group": "Apply",
+  "label": "Paragraph"
+ },
+ {
+  "key": "careers.apply.54",
+  "page": "Careers page",
+  "group": "Apply",
+  "label": "Button"
+ },
+ {
+  "key": "careers.apply.55",
+  "page": "Careers page",
+  "group": "Apply",
+  "label": "Small label"
+ },
+ {
+  "key": "careers.apply.56",
+  "page": "Careers page",
+  "group": "Apply",
+  "label": "Heading"
+ },
+ {
+  "key": "careers.apply.57",
+  "page": "Careers page",
+  "group": "Apply",
+  "label": "Paragraph"
+ },
+ {
+  "key": "careers.apply.58",
+  "page": "Careers page",
+  "group": "Apply",
+  "label": "Button"
+ },
+ {
+  "key": "notfound.meta.title",
+  "page": "\"Page not found\" page",
+  "group": "Page title & search description",
+  "label": "Browser tab title"
+ },
+ {
+  "key": "notfound.meta.description",
+  "page": "\"Page not found\" page",
+  "group": "Page title & search description",
+  "label": "Search engine description (Google)"
+ },
+ {
+  "key": "notfound.page.1",
+  "page": "\"Page not found\" page",
+  "group": "Skip link",
+  "label": "Link for keyboard users (hidden until focused)"
+ },
+ {
+  "key": "notfound.top.1",
+  "page": "\"Page not found\" page",
+  "group": "404",
+  "label": "Small label"
+ },
+ {
+  "key": "notfound.top.2",
+  "page": "\"Page not found\" page",
+  "group": "404",
+  "label": "Text"
+ },
+ {
+  "key": "notfound.top.3",
+  "page": "\"Page not found\" page",
+  "group": "404",
+  "label": "Text"
+ },
+ {
+  "key": "notfound.top.4",
+  "page": "\"Page not found\" page",
+  "group": "404",
+  "label": "Paragraph"
+ },
+ {
+  "key": "notfound.top.5",
+  "page": "\"Page not found\" page",
+  "group": "404",
+  "label": "Button"
+ },
+ {
+  "key": "notfound.top.6",
+  "page": "\"Page not found\" page",
+  "group": "404",
+  "label": "Button"
+ }
+]

@@ -53,10 +53,11 @@ return {
   'services-modal': () => S.map((s, i) => {
     const n = s.images.length;
     const main = s.images.map((im, k) => `<img class="${[im.cut ? 'cut' : '', k === 0 ? 'on' : ''].filter(Boolean).join(' ')}" src="${esc(im.src)}" alt="${esc(k === 0 ? s.title : `${s.title} — image ${k + 1}`)}" loading="lazy" data-k="${k}">`).join('');
-    const thumbs = n > 1 ? `<div class="m-thumbs" role="group" aria-label="Images">${s.images.map((im, k) => `<button type="button" aria-pressed="${k === 0}" data-k="${k}" aria-label="${esc(im.label || `Show image ${k + 1} of ${n}`)}"><img class="${im.cut ? 'cut' : ''}" src="${esc(im.cut ? im.src : thumb(im))}" alt="" loading="lazy"></button>`).join('')}</div>` : '';
+    const thumbs = n > 1 ? `<div class="m-thumbs" role="group" aria-label="Images">${s.images.map((im, k) => `<button type="button" aria-pressed="${k === 0}" data-k="${k}" aria-label="${esc(im.label || `Show image ${k + 1} of ${n}`)}"><span class="th"><img class="${im.cut ? 'cut' : ''}" src="${esc(im.cut ? im.src : thumb(im))}" alt="" loading="lazy"></span>${im.label ? `<span class="tl">${esc(im.label)}</span>` : ''}</button>`).join('')}</div>` : '';
+    const caps = s.images.some((im) => im.label || im.desc) ? `<div class="m-caps" aria-live="polite">${s.images.map((im, k) => `<div class="m-cap${k === 0 ? ' on' : ''}" data-k="${k}">${im.label ? `<b>${esc(im.label)}</b>` : ''}${im.desc ? `<p>${esc(im.desc)}</p>` : ''}</div>`).join('')}</div>` : '';
     return `
         <article class="m-prod" id="svc-${esc(s.id)}" data-id="${esc(s.id)}" aria-labelledby="mt-${esc(s.id)}">
-          <div class="m-media"><div class="m-main">${main}</div>${thumbs}</div>
+          <div class="m-media"><div class="m-main">${main}</div>${thumbs}${caps}</div>
           <div class="m-info">
             <span class="micro m-fam">${pad(i + 1)} / ${pad(S.length)} · ${esc(s.category)}</span>
             <h3 id="mt-${esc(s.id)}">${esc(s.title)}</h3>
@@ -75,6 +76,19 @@ return {
   'industries-bgs': () => site.industries.map((d, k) => `<img class="${k === 0 ? 'on' : ''}" src="${esc(d.image)}" alt="" loading="lazy" data-k="${k}">`).join(''),
   'industries-list': () => site.industries.map((d, k) => `<li class="${k === 0 ? 'on' : ''}" data-k="${k}"><button type="button" aria-expanded="${k === 0}"><span class="n">${pad(k + 1)}</span><span class="t">${esc(d.name)}</span><span class="sv">${d.tags.map((t) => `<span>${esc(t)}</span>`).join('')}</span></button></li>`).join(''),
 
+  facilities: () => (site.facilities || []).map((f, i) => `
+          <li data-in style="--i:${i % 3}">
+            <article class="fac">
+              <div class="fac-pic">${f.image ? `<img src="${esc(f.image)}" alt="${esc(f.name)}" loading="lazy">` : ''}</div>
+              <div class="fac-body">
+                <span class="fac-n">${pad(i + 1)}</span>
+                <h3>${esc(f.name)}</h3>${f.desc ? `
+                <p>${esc(f.desc)}</p>` : ''}${f.specs?.length ? `
+                <ul>${f.specs.map((t) => `<li>${esc(t)}</li>`).join('')}</ul>` : ''}
+              </div>
+            </article>
+          </li>`).join('') + '\n        ',
+
   clients: () => site.clients.map((c, i) => `
           <li data-in style="--i:${i % 6}">
             <a class="client" href="${esc(c.url)}" target="_blank" rel="noopener" aria-label="${esc(`${c.name} — visit ${host(c.url)} (opens in a new tab)`)}">
@@ -88,10 +102,41 @@ return {
 };
 }
 
+// Fixed page texts: every element marked data-t="key" gets its wording from site.text[key].
+function renderTexts(html, text) {
+  if (!text) return html;
+  html = html.replace(/<meta([^>]*?) data-ta="content:([^"]+)"([^>]*)>/g, (all, a, key, b) => {
+    if (text[key] == null) return all;
+    return `<meta${a.replace(/ content="[^"]*"/, '')} content="${esc(text[key])}" data-ta="content:${key}"${b.replace(/ content="[^"]*"/, '')}>`;
+  });
+  const open = /<([a-z0-9]+)\b[^>]*\sdata-t="([^"]+)"[^>]*>/g;
+  let out = '', pos = 0, m;
+  while ((m = open.exec(html))) {
+    const tag = m[1], key = m[2], start = m.index + m[0].length;
+    // find the matching closing tag
+    const re = new RegExp(`<(/?)${tag}\\b[^>]*>`, 'g'); re.lastIndex = start;
+    let depth = 1, t, end = -1;
+    while ((t = re.exec(html))) { depth += t[1] ? -1 : 1; if (!depth) { end = t.index; break; } }
+    if (end < 0) throw new Error(`No closing </${tag}> for text "${key}"`);
+    if (text[key] == null) continue;
+    const inner = html.slice(start, end), lead = inner.match(/^\s*/)[0], trail = inner.match(/\s*$/)[0];
+    let head = m[0];
+    const num = String(text[key]).replace(/<[^>]+>/g, '').trim();
+    if (/\sdata-count="/.test(head) && /^\d+$/.test(num)) head = head.replace(/data-count="\d*"/, `data-count="${num}"`);
+    out += html.slice(pos, m.index) + head + lead + text[key] + trail;
+    pos = end; open.lastIndex = end;
+  }
+  return out + html.slice(pos);
+}
+
 export function render(html, site) {
   const blocks = makeBlocks(site);
-  return html.replace(/(<!-- cms:([a-z-]+) -->)([\s\S]*?)(<!-- \/cms:\2 -->)/g, (all, open, name, _old, close) => {
+  html = html.replace(/(<!-- cms:([a-z-]+) -->)([\s\S]*?)(<!-- \/cms:\2 -->)/g, (all, open, name, _old, close) => {
     if (!blocks[name]) throw new Error(`Unknown cms block "${name}"`);
     return open + blocks[name]() + close;
   });
+  // the Facilities section and its menu links only show once a facility has been added
+  const hasFac = (site.facilities || []).length > 0;
+  html = html.replace(/<([a-z]+)([^>]*?) data-fac( hidden)?([^>]*)>/g, (all, tag, a, _h, b) => `<${tag}${a} data-fac${hasFac ? '' : ' hidden'}${b}>`);
+  return renderTexts(html, site.text);
 }
