@@ -622,13 +622,19 @@
       return wrap;
     } },
     theme: { label: 'Theme', title: 'Colour theme', desc: 'Choose the colours of the whole website.', render: renderTheme },
-    images: { label: 'Section images', title: 'Section images', desc: 'The large photos used in other sections of the website.', render: function () {
+    images: { label: 'Images & map', title: 'Section images & map', desc: 'The large photos used in other sections of the website, the company photo and the live map in the Contact section.', render: function () {
       var I = data.images, box = h('div', { class: 'item open' }), body = h('div', { class: 'item-b' });
       [imageField(I.hero, 'src', 'Home page — top banner photo', 'photo', { name: function () { return 'hero'; } }),
         textField(I.hero, 'alt', 'Banner photo description', { full: true, hint: 'for screen readers and Google' }),
         imageField(I.about, 'src', 'About section photo', 'photo', { name: function () { return 'about'; } }),
         textField(I.about, 'alt', 'About photo description'),
         textField(I.about, 'caption', 'About photo caption'),
+        imageField(I.company = I.company || {}, 'src', 'Contact section — company photo', 'photo', { hint: 'shown under the address, e.g. the building or office; leave empty to hide', name: function () { return 'company'; } }),
+        textField(I.company, 'alt', 'Company photo description', { hint: 'for screen readers and Google' }),
+        textField(I.company, 'caption', 'Company photo caption', { optional: true, hint: 'optional, shown on the photo' }),
+        h('button', { class: 'btn btn--sm btn--ghost', type: 'button', onclick: function () { if (!I.company.src) return; I.company.src = ''; changed(); showSection('images'); } }, 'Remove company photo'),
+        textField(data.map = data.map || { query: '', show: true }, 'query', 'Contact section — map location', { full: true, hint: 'address or place name exactly as you would search it on Google Maps' }),
+        checkField(data.map, 'show', 'Show the live map on the website'),
         imageField(I.contact, 'src', 'Contact section background', 'photo', { name: function () { return 'contact'; } }),
         imageField(I.careersHero, 'src', 'Careers page — top banner photo', 'photo', { name: function () { return 'careers'; } }),
       ].forEach(function (f) { body.appendChild(f); });

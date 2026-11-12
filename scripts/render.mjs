@@ -63,6 +63,18 @@ return {
   </script>
   `;
   },
+  'company-photo': () => {
+    const p = I.company;
+    if (!p || !p.src) return '';
+    return `<figure class="ct-photo" data-in style="--i:3"><img src="${esc(p.src)}" alt="${esc(p.alt || 'SysMatica Mechatronics')}" loading="lazy">${p.caption ? `<figcaption class="micro">${esc(p.caption)}</figcaption>` : ''}</figure>`;
+  },
+  // live Google Map of the company location (no API key needed)
+  map: () => {
+    const m = site.map;
+    if (!m || !m.query || m.show === false) return '';
+    const q = encodeURIComponent(m.query);
+    return `<div class="ct-map" data-in style="--i:4"><iframe src="https://maps.google.com/maps?q=${q}&amp;z=${+m.zoom || 15}&amp;output=embed" title="Map: ${esc(m.query)}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe><a class="ct-map-link" href="https://www.google.com/maps/search/?api=1&amp;query=${q}" target="_blank" rel="noopener">Open in Google Maps ↗</a></div>`;
+  },
   'contact-image': () => `<img src="${esc(I.contact.src)}" alt="" loading="lazy">`,
   'careers-hero-image': () => `<img src="${esc(I.careersHero.src)}" alt="">`,
   'count-services': () => `<span class="v tnum" data-count="${S.length}">${S.length}</span>`,

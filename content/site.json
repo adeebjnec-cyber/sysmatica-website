@@ -14,6 +14,11 @@
     },
     "careersHero": {
       "src": "assets/img/spm-multi-gauging.webp"
+    },
+    "company": {
+      "src": "assets/img/office.webp",
+      "alt": "SysMatica Mechatronics office",
+      "caption": "SysMatica Mechatronics"
     }
   },
   "team": [
@@ -1006,5 +1011,9 @@
   "analytics": {
     "goatcounter": "sysmatica"
   },
-  "theme": "purple"
+  "theme": "purple",
+  "map": {
+    "query": "SysMatica Mechatronics Private Limited, Auric City, Shendra",
+    "show": true
+  }
 }
