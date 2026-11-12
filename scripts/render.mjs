@@ -4,6 +4,24 @@ const esc = (s) => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').
 const pad = (n) => String(n).padStart(2, '0');
 const host = (url) => { try { return new URL(url).hostname.replace(/^www\./, ''); } catch { return url; } };
 const thumb = (im) => im.thumb || im.src;
+// Simple formatting for descriptions typed in the admin: "### Heading", "- bullet", **bold**, blank line = new paragraph.
+const md = (text) => {
+  const inline = (s) => esc(s).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  const out = []; let list = null, para = [];
+  const endPara = () => { if (para.length) { out.push(`<p>${para.map(inline).join('<br>')}</p>`); para = []; } };
+  const endList = () => { if (list) { out.push(`<ul>${list.map((l) => `<li>${inline(l)}</li>`).join('')}</ul>`); list = null; } };
+  const flush = () => { endPara(); endList(); };
+  String(text || '').replace(/\r/g, '').split('\n').forEach((raw) => {
+    const line = raw.trim();
+    if (!line) { flush(); return; }
+    const hd = line.match(/^#{1,6}\s+(.*)$/), li = line.match(/^[-*•]\s+(.*)$/);
+    if (hd) { flush(); out.push(`<b class="md-h">${inline(hd[1])}</b>`); }
+    else if (li) { endPara(); (list = list || []).push(li[1]); }
+    else { endList(); para.push(line); }
+  });
+  flush();
+  return out.join('');
+};
 const WORDS = ['Zero', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen', 'Twenty'];
 const ARROW = '<svg aria-hidden="true"><use href="#i-arrow"/></svg>';
 const LINKEDIN = '<svg aria-hidden="true" viewBox="0 0 16 16"><path fill="currentColor" d="M3.6 5.6h2.1v6.8H3.6zM4.65 2.2a1.22 1.22 0 1 1 0 2.44 1.22 1.22 0 0 1 0-2.44zM7 5.6h2v.93h.03c.28-.53.97-1.09 2-1.09 2.13 0 2.53 1.4 2.53 3.23v3.73h-2.1V9.1c0-.79-.02-1.8-1.1-1.8-1.1 0-1.27.86-1.27 1.74v3.36H7z"/></svg>';
@@ -80,10 +98,10 @@ return {
     const n = s.images.length;
     const main = s.images.map((im, k) => `<img class="${[im.cut ? 'cut' : '', k === 0 ? 'on' : ''].filter(Boolean).join(' ')}" src="${esc(im.src)}" alt="${esc(k === 0 ? s.title : `${s.title} — image ${k + 1}`)}" loading="lazy" data-k="${k}">`).join('');
     const thumbs = n > 1 ? `<div class="m-thumbs" role="group" aria-label="Images">${s.images.map((im, k) => `<button type="button" aria-pressed="${k === 0}" data-k="${k}" aria-label="${esc(im.label || `Show image ${k + 1} of ${n}`)}"><span class="th"><img class="${im.cut ? 'cut' : ''}" src="${esc(im.cut ? im.src : thumb(im))}" alt="" loading="lazy"></span>${im.label ? `<span class="tl">${esc(im.label)}</span>` : ''}</button>`).join('')}</div>` : '';
-    const caps = s.images.some((im) => im.label || im.desc) ? `<div class="m-caps" aria-live="polite">${s.images.map((im, k) => `<div class="m-cap${k === 0 ? ' on' : ''}" data-k="${k}">${im.label ? `<b>${esc(im.label)}</b>` : ''}${im.desc ? `<p>${esc(im.desc)}</p>` : ''}</div>`).join('')}</div>` : '';
+    const caps = s.images.some((im) => im.label || im.desc) ? `<div class="m-caps" aria-live="polite">${s.images.map((im, k) => `<div class="m-cap${k === 0 ? ' on' : ''}" data-k="${k}">${im.label ? `<b>${esc(im.label)}</b>` : ''}${im.desc ? `<div class="md">${md(im.desc)}</div>` : ''}</div>`).join('')}</div>` : '';
     return `
         <article class="m-prod" id="svc-${esc(s.id)}" data-id="${esc(s.id)}" aria-labelledby="mt-${esc(s.id)}">
-          <div class="m-media"><div class="m-main">${main}</div>${thumbs}${caps}</div>
+          <div class="m-media"><div class="m-main">${main}${n > 1 ? `<button type="button" class="m-arr prev" data-dir="-1" aria-label="Previous image">${ARROW}</button><button type="button" class="m-arr next" data-dir="1" aria-label="Next image">${ARROW}</button><span class="m-pos" aria-hidden="true"><b>1</b> / ${n}</span>` : ''}</div>${thumbs}${caps}</div>
           <div class="m-info">
             <span class="micro m-fam">${pad(i + 1)} / ${pad(S.length)} · ${esc(s.category)}</span>
             <h3 id="mt-${esc(s.id)}">${esc(s.title)}</h3>
@@ -107,7 +125,7 @@ return {
     const n = ims.length;
     const main = ims.map((im, k) => `<img class="${[im.cut ? 'cut' : '', k === 0 ? 'on' : ''].filter(Boolean).join(' ')}" src="${esc(im.src)}" alt="${esc(im.label || (n > 1 ? `${f.name} — photo ${k + 1}` : f.name))}" loading="lazy" data-k="${k}">`).join('');
     const thumbs = n > 1 ? `<div class="fac-thumbs" role="group" aria-label="${esc(f.name)} photos">${ims.map((im, k) => `<button type="button" aria-pressed="${k === 0}" data-k="${k}" aria-label="${esc(im.label || `Photo ${k + 1} of ${n}`)}"><img class="${im.cut ? 'cut' : ''}" src="${esc(im.cut ? im.src : thumb(im))}" alt="" loading="lazy"></button>`).join('')}</div>` : '';
-    const caps = ims.some((im) => im.label || im.desc) ? `<div class="fac-caps" aria-live="polite">${ims.map((im, k) => `<p class="fac-cap${k === 0 ? ' on' : ''}" data-k="${k}">${im.label ? `<b>${esc(im.label)}</b>` : ''}${im.desc ? `<span>${esc(im.desc)}</span>` : ''}</p>`).join('')}</div>` : '';
+    const caps = ims.some((im) => im.label || im.desc) ? `<div class="fac-caps" aria-live="polite">${ims.map((im, k) => `<div class="fac-cap${k === 0 ? ' on' : ''}" data-k="${k}">${im.label ? `<b>${esc(im.label)}</b>` : ''}${im.desc ? `<div class="md">${md(im.desc)}</div>` : ''}</div>`).join('')}</div>` : '';
     return `
           <li data-in style="--i:${i % 3}">
             <article class="fac">
@@ -115,7 +133,7 @@ return {
               <div class="fac-body">
                 <span class="fac-n">${pad(i + 1)}</span>
                 <h3>${esc(f.name)}</h3>${f.desc ? `
-                <p>${esc(f.desc)}</p>` : ''}${f.specs?.length ? `
+                <div class="md">${md(f.desc)}</div>` : ''}${f.specs?.length ? `
                 <ul>${f.specs.map((t) => `<li>${esc(t)}</li>`).join('')}</ul>` : ''}
               </div>
             </article>

@@ -14,8 +14,7 @@
     prods.forEach(function (p, k) { p.classList.toggle('on', k === cur); });
     $('#m-count').textContent = prods[cur].querySelector('h3').textContent;
     // always start a service on its first image
-    $$('.m-main img, .m-cap', prods[cur]).forEach(function (el) { el.classList.toggle('on', el.getAttribute('data-k') === '0'); });
-    $$('.m-thumbs button', prods[cur]).forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-k') === '0')); });
+    if (prods[cur]._go) prods[cur]._go(0);
     $('#m-scroll').scrollTop = 0;
   }
   function open(id) {
@@ -50,17 +49,29 @@
     }
   });
 
-  // gallery thumbnails
+  // gallery: thumbnails, previous/next arrows and swipe (stays inside the same service)
   prods.forEach(function (p) {
-    var imgs = $$('.m-main img', p), th = $$('.m-thumbs button', p), caps = $$('.m-cap', p);
-    th.forEach(function (b) {
-      b.addEventListener('click', function () {
-        var k = b.getAttribute('data-k');
-        imgs.forEach(function (im) { im.classList.toggle('on', im.getAttribute('data-k') === k); });
-        caps.forEach(function (c) { c.classList.toggle('on', c.getAttribute('data-k') === k); });
-        th.forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+    var imgs = $$('.m-main img', p), th = $$('.m-thumbs button', p), caps = $$('.m-cap', p), pos = $('.m-pos b', p);
+    var n = imgs.length, at = 0;
+    function go(k) {
+      at = (k + n) % n; var s = String(at);
+      imgs.forEach(function (im) { im.classList.toggle('on', im.getAttribute('data-k') === s); });
+      caps.forEach(function (c) { c.classList.toggle('on', c.getAttribute('data-k') === s); });
+      th.forEach(function (x) { x.setAttribute('aria-pressed', String(x.getAttribute('data-k') === s)); });
+      if (th[at] && th[at].scrollIntoView) th[at].scrollIntoView({ block: 'nearest', inline: 'nearest' });
+      if (pos) pos.textContent = at + 1;
+    }
+    p._go = go;
+    th.forEach(function (b) { b.addEventListener('click', function () { go(+b.getAttribute('data-k')); }); });
+    $$('.m-arr', p).forEach(function (b) { b.addEventListener('click', function () { go(at + +b.getAttribute('data-dir')); }); });
+    var main = $('.m-main', p), x0 = null;
+    if (main && n > 1) {
+      main.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; }, { passive: true });
+      main.addEventListener('touchend', function (e) {
+        if (x0 == null) return; var dx = e.changedTouches[0].clientX - x0; x0 = null;
+        if (Math.abs(dx) > 40) go(at + (dx < 0 ? 1 : -1));
       });
-    });
+    }
   });
 
   // links like index.html#svc-hydraulics open that service directly

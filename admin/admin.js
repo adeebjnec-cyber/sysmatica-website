@@ -222,7 +222,7 @@
       s.images.forEach(function (im, i) {
         var lab = h('input', { type: 'text', placeholder: 'Image title, e.g. Leak Test SPM' }); lab.value = im.label || '';
         lab.addEventListener('input', function () { if (lab.value.trim()) im.label = lab.value; else delete im.label; changed(); });
-        var dsc = h('textarea', { rows: 3, placeholder: 'Description shown when this image is selected (optional)' }); dsc.value = im.desc || '';
+        var dsc = h('textarea', { rows: 3, placeholder: 'Description shown when this image is selected (optional). Formatting: ### heading, - bullet, **bold**' }); dsc.value = im.desc || '';
         dsc.addEventListener('input', function () { if (dsc.value.trim()) im.desc = dsc.value; else delete im.desc; changed(); });
         var cut = h('input', { type: 'checkbox' }); cut.checked = !!im.cut;
         cut.addEventListener('change', function () { im.cut = cut.checked; draw(); changed(); });
