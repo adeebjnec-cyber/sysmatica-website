@@ -711,7 +711,21 @@
       "what": "Industrial LED lighting, AGVs & power controllers"
     }
   ],
-  "facilities": [],
+  "facilities": [
+    {
+      "name": "VMC ",
+      "images": [
+        {
+          "src": "assets/img/uploads/facility-vmc-mwdbmeka.webp",
+          "thumb": "assets/img/uploads/facility-vmc-mwdbmeka-sm.webp",
+          "cut": false,
+          "label": "VMC BMV 50"
+        }
+      ],
+      "desc": "",
+      "specs": []
+    }
+  ],
   "text": {
     "home.meta.title": "SysMatica Mechatronics — Where Precision Meets Production",
     "home.meta.description": "Special purpose machines, automation and robotics, conveyors, hydraulic systems, dies and press tools, jigs and fixtures, precision machined components and steel plant equipment — engineered by SysMatica Mechatronics, Chhatrapati Sambhajinagar.",
