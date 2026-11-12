@@ -5,16 +5,18 @@
    ========================================================================== */
 :root {
   /* Light theme (default): white page, navy text, SysMatica logo blue */
-  --fg: 11 31 58;          /* text */
+  --ink: 11 31 58;         /* brand dark colour (themes change it) */
+  --soft: 244 248 253;     /* light section background */
+  --fg: var(--ink);        /* text */
   --bg: 255 255 255;       /* page */
   --accent: 0 96 176;      /* logo blue #0060B0 */
   --tint: 214 229 245;     /* pale blue card tint */
   --panel: 240 245 251;    /* image frames */
-  --shadow: 11 31 58;
+  --shadow: var(--ink);
   --sh: .22;               /* shadow strength */
   --muted: #5A6B80;
-  --line: rgb(11 31 58 / .1);
-  --line-2: rgb(11 31 58 / .18);
+  --line: rgb(var(--ink) / .1);
+  --line-2: rgb(var(--ink) / .18);
   --err: #C2410C;
   --font: "Inter", system-ui, sans-serif;
   --m: clamp(20px, 4.6vw, 80px);
@@ -514,7 +516,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .motion .svc[data-in].in:hover { transform: translateY(-6px); }
 
 /* Service detail panel */
-.m-scrim { position: fixed; inset: 0; z-index: 300; background: rgb(11 31 58 / .55); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); opacity: 0; visibility: hidden; transition: opacity 500ms var(--ease), visibility 0s linear 500ms; }
+.m-scrim { position: fixed; inset: 0; z-index: 300; background: rgb(var(--ink) / .55); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); opacity: 0; visibility: hidden; transition: opacity 500ms var(--ease), visibility 0s linear 500ms; }
 .m-box { position: fixed; z-index: 310; left: 50%; top: 50%; width: min(1180px, calc(100vw - 40px)); max-height: calc(100vh - 40px); display: flex; flex-direction: column; border-radius: 28px; overflow: hidden; background: linear-gradient(160deg, rgb(var(--panel)), rgb(var(--bg)) 70%); box-shadow: inset 0 0 0 1px var(--line-2), 0 60px 160px -40px rgb(var(--shadow) / calc(.95 * var(--sh))); opacity: 0; visibility: hidden; transform: translate(-50%, -46%) scale(.97); transition: opacity 500ms var(--ease), transform 600ms var(--ease), visibility 0s linear 600ms; }
 .m-open .m-scrim { opacity: 1; visibility: visible; transition: opacity 500ms var(--ease), visibility 0s; }
 .m-open .m-box { opacity: 1; visibility: visible; transform: translate(-50%, -50%); transition: opacity 500ms var(--ease), transform 600ms var(--ease), visibility 0s; }
@@ -698,14 +700,14 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .nav a { color: rgb(var(--fg) / .72); }
 .nav a:hover, .nav a[aria-current="true"] { color: rgb(var(--accent)); }
 .btn--line { box-shadow: inset 0 0 0 1.5px var(--line-2); }
-.hero .btn:not(.btn--cyan) { background: #fff; color: rgb(11 31 58); }
+.hero .btn:not(.btn--cyan) { background: #fff; color: rgb(var(--ink)); }
 .hero .btn:not(.btn--cyan):hover { color: #fff; }
 .hero .btn--line { background: transparent; color: #fff; }
 body { background: rgb(var(--bg)); }
 .about, .process, .clients { background: rgb(var(--bg)); }
-.team, .services { background: linear-gradient(180deg, rgb(244 248 253), rgb(255 255 255)); }
-.svc, .member, .client, .mv-card, .hire-steps li { background: #fff; box-shadow: inset 0 0 0 1px var(--line), 0 18px 40px -28px rgb(11 31 58 / .35); }
-.svc:hover, .member:hover, .client:hover, .mv-card:hover { box-shadow: inset 0 0 0 1px rgb(var(--accent) / .5), 0 30px 60px -30px rgb(11 31 58 / .4); }
+.team, .services { background: linear-gradient(180deg, rgb(var(--soft)), rgb(255 255 255)); }
+.svc, .member, .client, .mv-card, .hire-steps li { background: #fff; box-shadow: inset 0 0 0 1px var(--line), 0 18px 40px -28px rgb(var(--ink) / .35); }
+.svc:hover, .member:hover, .client:hover, .mv-card:hover { box-shadow: inset 0 0 0 1px rgb(var(--accent) / .5), 0 30px 60px -30px rgb(var(--ink) / .4); }
 .flow li, .why-list li { background: rgb(var(--panel)); }
 .client { background: #fff; }
 .c-logo img { opacity: 1; }
@@ -715,6 +717,6 @@ body { background: rgb(var(--bg)); }
 .vrow b { -webkit-text-stroke-color: rgb(var(--accent) / .6); }
 .track .big { color: rgb(var(--fg) / .22); }
 .js .manifesto .wd { color: rgb(var(--fg) / .16); }
-.m-initials .ini { background: linear-gradient(160deg, rgb(11 31 58), rgb(var(--accent))); -webkit-background-clip: text; background-clip: text; }
+.m-initials .ini { background: linear-gradient(160deg, rgb(var(--ink)), rgb(var(--accent))); -webkit-background-clip: text; background-clip: text; }
 .since .thin { color: rgb(var(--fg) / .8); }
-.field select option { color: rgb(11 31 58); background: #fff; }
+.field select option { color: rgb(var(--ink)); background: #fff; }

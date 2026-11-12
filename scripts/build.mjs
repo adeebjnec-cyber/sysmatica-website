@@ -9,11 +9,12 @@ import { render } from './render.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const site = JSON.parse(readFileSync(join(ROOT, 'content/site.json'), 'utf8'));
+const themes = JSON.parse(readFileSync(join(ROOT, 'content/themes.json'), 'utf8'));
 
 for (const page of ['index.html', 'careers.html', '404.html']) {
   const file = join(ROOT, page);
   const before = readFileSync(file, 'utf8');
-  const after = render(before, site);
+  const after = render(before, site, themes);
   if (after !== before) writeFileSync(file, after);
   console.log(`${page}: ${after === before ? 'unchanged' : 'updated'}`);
 }

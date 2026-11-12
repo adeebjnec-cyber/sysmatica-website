@@ -467,6 +467,43 @@
     return wrap;
   }
 
+
+  /* ---------- colour theme ---------- */
+  var themeList = null;
+  function rgb(v, a) { return /^#/.test(v) ? v : 'rgb(' + v + (a != null ? ' / ' + a : '') + ')'; }
+  function renderTheme() {
+    var wrap = h('div');
+    if (!themeList) {
+      wrap.appendChild(h('p', { text: 'Loading themes…' }));
+      fetch('/content/themes.json', { cache: 'no-store' }).then(function (r) { return r.json(); }).then(function (t) { themeList = t; if (current === 'theme') showSection('theme'); })
+        .catch(function () { wrap.textContent = 'The themes could not be loaded. Reload the page and try again.'; });
+      return wrap;
+    }
+    var cur = data.theme || 'blue';
+    var grid = h('div', { class: 'th-grid', role: 'radiogroup', 'aria-label': 'Colour theme' });
+    themeList.forEach(function (t) {
+      var L = t.light, D = t.dark;
+      var pv = h('div', { class: 'th-pv', 'aria-hidden': 'true' });
+      pv.innerHTML =
+        '<div class="th-dark" style="background:' + rgb(D.bg) + '"><i style="background:' + rgb(D.accent) + '"></i><b style="background:rgba(255,255,255,.9)"></b><b style="background:rgba(255,255,255,.5);width:40%"></b></div>' +
+        '<div class="th-light" style="background:linear-gradient(180deg,' + rgb(L.soft) + ',#fff)">' +
+          '<span style="background:#fff;box-shadow:inset 0 0 0 1px ' + rgb(L.ink, .12) + '"><em style="background:' + rgb(L.tint) + '"></em><b style="background:' + rgb(L.ink) + '"></b><b style="background:' + L.muted + ';width:70%"></b></span>' +
+          '<span style="background:#fff;box-shadow:inset 0 0 0 1px ' + rgb(L.ink, .12) + '"><em style="background:' + rgb(L.tint) + '"></em><b style="background:' + rgb(L.ink) + '"></b><i style="background:' + rgb(L.accent) + '"></i></span>' +
+        '</div>';
+      var card = h('button', { type: 'button', role: 'radio', 'aria-checked': String(t.id === cur), class: 'th-card' + (t.id === cur ? ' on' : ''), onclick: function () { data.theme = t.id; changed(); showSection('theme'); } }, [
+        pv,
+        h('div', { class: 'th-meta' }, [
+          h('div', { class: 'th-sw' }, [L.ink, L.accent, D.bg, D.accent, L.tint].map(function (c) { return h('span', { style: 'background:' + rgb(c) }); })),
+          h('b', { text: t.name }), h('span', { text: t.id === cur ? 'Selected' : t.note }),
+        ]),
+      ]);
+      grid.appendChild(card);
+    });
+    wrap.appendChild(grid);
+    wrap.appendChild(h('p', { class: 'muted small', text: 'Pick a theme, then press "Save changes". The whole website (buttons, headings, dark sections, cards and highlights) switches to the new colours in 1–2 minutes. The logo keeps its own colours.' }));
+    return wrap;
+  }
+
   /* ---------- sections ---------- */
   var SECTIONS = {
     stats: { label: 'Stats', title: 'Website statistics', desc: 'How many people visit the website, what they look at, where they come from, and how many enquiries and applications it brings in.', render: renderStats },
@@ -581,6 +618,7 @@
       draw();
       return wrap;
     } },
+    theme: { label: 'Theme', title: 'Colour theme', desc: 'Choose the colours of the whole website.', render: renderTheme },
     images: { label: 'Section images', title: 'Section images', desc: 'The large photos used in other sections of the website.', render: function () {
       var I = data.images, box = h('div', { class: 'item open' }), body = h('div', { class: 'item-b' });
       [imageField(I.hero, 'src', 'Home page — top banner photo', 'photo', { name: function () { return 'hero'; } }),

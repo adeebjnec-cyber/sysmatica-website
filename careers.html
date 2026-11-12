@@ -19,11 +19,23 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/cinema.css?v=9">
+  <link rel="stylesheet" href="assets/css/cinema.css?v=10">
+  <!-- cms:theme --><!-- /cms:theme -->
   <script>
     (function (d) { d.classList.add('js'); if (!matchMedia('(prefers-reduced-motion: reduce)').matches) d.classList.add('motion'); })(document.documentElement);
   </script>
-  <!-- cms:analytics --><!-- /cms:analytics -->
+  <!-- cms:analytics -->
+  <script data-goatcounter="https://sysmatica.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+  <script>
+    window.scTrack = function (path, title) { try { if (window.goatcounter && goatcounter.count) goatcounter.count({ path: path, title: title || path, event: true }); } catch (e) {} };
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest && e.target.closest('a[href^="tel:"], a[href^="mailto:"], a[href*="wa.me/"]');
+      if (!a) return;
+      var h = a.getAttribute('href');
+      scTrack(h.indexOf('tel:') === 0 ? 'click-phone' : h.indexOf('mailto:') === 0 ? 'click-email' : 'click-whatsapp');
+    });
+  </script>
+  <!-- /cms:analytics -->
 </head>
 <body>
   <a class="skip-link" href="#main" data-t="careers.page.1">Skip to content</a>

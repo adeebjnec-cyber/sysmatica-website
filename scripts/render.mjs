@@ -11,7 +11,7 @@ const MAIL = '<svg aria-hidden="true" viewBox="0 0 16 16"><path d="M2 4h12v8H2zM
 const EXT = '<svg aria-hidden="true" viewBox="0 0 16 16"><path d="M5 3h8v8M13 3L4 12" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>';
 
 
-function makeBlocks(site) {
+function makeBlocks(site, themes) {
 const S = site.services, I = site.images;
 return {
   'hero-image': () => `<img src="${esc(I.hero.src)}" alt="${esc(I.hero.alt)}" fetchpriority="high">`,
@@ -19,6 +19,14 @@ return {
             <img src="${esc(I.about.src)}" alt="${esc(I.about.alt)}" loading="lazy">
             <figcaption class="micro">${esc(I.about.caption)}</figcaption>
           `,
+  // colour theme chosen in the admin (content/themes.json); the default blue needs no overrides
+  theme: () => {
+    const t = (themes || []).find((x) => x.id === site.theme);
+    if (!t || t.id === 'blue') return '';
+    const L = t.light, D = t.dark;
+    return `<style id="site-theme">:root{--ink:${L.ink};--accent:${L.accent};--tint:${L.tint};--panel:${L.panel};--soft:${L.soft};--muted:${L.muted}}`
+      + `.hero,.industries,.contact{--bg:${D.bg};--accent:${D.accent};--tint:${D.tint};--panel:${D.panel};--muted:${D.muted}}</style>`;
+  },
   // visitor statistics (GoatCounter: no cookies, no personal data). Events: enquiries, applications,
   // service pop-ups opened, phone / email / WhatsApp clicks.
   analytics: () => {
@@ -147,8 +155,8 @@ function renderTexts(html, text) {
   return out + html.slice(pos);
 }
 
-export function render(html, site) {
-  const blocks = makeBlocks(site);
+export function render(html, site, themes) {
+  const blocks = makeBlocks(site, themes);
   html = html.replace(/(<!-- cms:([a-z-]+) -->)([\s\S]*?)(<!-- \/cms:\2 -->)/g, (all, open, name, _old, close) => {
     if (!blocks[name]) throw new Error(`Unknown cms block "${name}"`);
     return open + blocks[name]() + close;
