@@ -112,7 +112,7 @@
       setHidden(form, 'from_name', 'SysMatica website');
       fetch(form.action, { method: 'POST', headers: { Accept: 'application/json' }, body: new FormData(form) })
         .then(function (r) { return r.json(); })
-        .then(function (j) { if (!j.success) throw new Error(j.message); if (btn) btn.disabled = false; form.reset(); showDone(); })
+        .then(function (j) { if (!j.success) throw new Error(j.message); if (btn) btn.disabled = false; form.reset(); showDone(); if (window.scTrack) scTrack('form-sent/' + form.getAttribute('name')); })
         .catch(fallback);
     });
 

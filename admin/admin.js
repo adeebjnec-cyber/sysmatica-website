@@ -148,7 +148,7 @@
   }
 
   /* ---------- state ---------- */
-  var backend, data, saved, current = 'clients';
+  var backend, data, saved, current = 'stats';
   function isDirty() { return JSON.stringify(data) !== saved; }
   function changed() {
     var d = isDirty();
@@ -310,8 +310,166 @@
     return wrap;
   }
 
+
+  /* ---------- visitor statistics (GoatCounter) ---------- */
+  var statsPeriod = 30, statsCache = {};
+  function gcApi(path) {
+    var st = creds.stats;
+    return fetch('https://' + st.code + '.goatcounter.com/api/v0' + path, { headers: { Authorization: 'Bearer ' + st.token, 'Content-Type': 'application/json' }, cache: 'no-store' })
+      .then(function (r) {
+        if (r.status === 401 || r.status === 403) throw new Error('GoatCounter refused the API key. Check that it has "Read statistics" permission, then connect again.');
+        if (r.status === 429) throw new Error('Too many requests to GoatCounter. Wait a minute and try again.');
+        if (!r.ok) throw new Error('GoatCounter error ' + r.status + '.');
+        return r.json();
+      });
+  }
+  function sleep(ms) { return new Promise(function (ok) { setTimeout(ok, ms); }); }
+  function hourIso(d) { d = new Date(d); d.setMinutes(0, 0, 0); return d.toISOString().replace('.000Z', 'Z'); }
+  async function loadStats(days) {
+    var end = new Date(Date.now() + 3600e3), start = new Date();
+    if (days === 1) start.setHours(0, 0, 0, 0); else { start.setDate(start.getDate() - days + 1); start.setHours(0, 0, 0, 0); }
+    var q = '?start=' + encodeURIComponent(hourIso(start)) + '&end=' + encodeURIComponent(hourIso(end));
+    var out = {};
+    var calls = [['total', '/stats/total' + q], ['hits', '/stats/hits' + q + '&limit=100'], ['refs', '/stats/toprefs' + q + '&limit=10'],
+      ['locations', '/stats/locations' + q + '&limit=10'], ['sizes', '/stats/sizes' + q], ['browsers', '/stats/browsers' + q + '&limit=8'], ['systems', '/stats/systems' + q + '&limit=8']];
+    for (var i = 0; i < calls.length; i++) { out[calls[i][0]] = await gcApi(calls[i][1]); await sleep(300); }   // GoatCounter allows ~4 requests a second
+    return out;
+  }
+  function fmt(n) { return Number(n || 0).toLocaleString('en-IN'); }
+  function eventName(path) {
+    if (path === 'form-sent/enquiry') return 'Enquiry form sent';
+    if (path === 'form-sent/job-application') return 'Job application sent';
+    if (path === 'click-phone') return 'Phone number tapped';
+    if (path === 'click-email') return 'Email address clicked';
+    if (path === 'click-whatsapp') return 'WhatsApp clicked';
+    if (path.indexOf('service/') === 0) {
+      var id = path.slice(8), s = (data.services || []).filter(function (x) { return x.id === id; })[0];
+      return 'Service opened: ' + (s ? s.title : id);
+    }
+    return path;
+  }
+  function pageName(p) {
+    p = p.replace(/^https?:\/\/[^/]+/, '');
+    if (p === '/' || p === '/index.html') return 'Home page';
+    if (/careers/.test(p)) return 'Careers page';
+    return p;
+  }
+  var SIZE = { phone: 'Phone', largephone: 'Large phone', tablet: 'Tablet', desktop: 'Computer', desktophd: 'Large computer', unknown: 'Unknown' };
+  function barList(title, rows, empty) {
+    var max = Math.max.apply(null, rows.map(function (r) { return r.n; }).concat([1]));
+    return h('div', { class: 'st-card' }, [h('h3', { text: title }), rows.length ? h('ol', { class: 'st-list' }, rows.map(function (r) {
+      return h('li', {}, [h('span', { class: 'st-bar', style: 'width:' + Math.max(2, Math.round(r.n / max * 100)) + '%' }), h('span', { class: 'st-l', text: r.l }), h('b', { text: fmt(r.n) })]);
+    })) : h('p', { class: 'muted small', text: empty || 'No data for this period yet.' })]);
+  }
+  function chart(stats, days) {
+    var pts = (stats || []).map(function (s) { return { d: s.day, n: days === 1 ? 0 : s.daily, hourly: s.hourly }; });
+    if (days === 1 && stats && stats.length) pts = stats[stats.length - 1].hourly.map(function (n, i) { return { d: i + ':00', n: n }; });
+    var W = 900, H = 180, max = Math.max.apply(null, pts.map(function (p) { return p.n; }).concat([1]));
+    var bw = W / Math.max(pts.length, 1);
+    var svg = '<svg viewBox="0 0 ' + W + ' ' + (H + 22) + '" class="st-chart" role="img" aria-label="Visitors per ' + (days === 1 ? 'hour' : 'day') + '">';
+    pts.forEach(function (p, i) {
+      var hh = Math.round(p.n / max * H), x = i * bw;
+      svg += '<rect x="' + (x + bw * 0.15) + '" y="' + (H - hh) + '" width="' + (bw * 0.7) + '" height="' + Math.max(hh, p.n ? 2 : 0) + '" rx="2"><title>' + p.d + ': ' + p.n + ' visitors</title></rect>';
+    });
+    var lab = function (i) { var p = pts[i]; if (!p) return ''; return days === 1 ? p.d : new Date(p.d + 'T00:00:00').toLocaleDateString('en-IN', { day: 'numeric', month: 'short' }); };
+    if (pts.length) svg += '<text x="0" y="' + (H + 16) + '">' + lab(0) + '</text><text x="' + W + '" y="' + (H + 16) + '" text-anchor="end">' + lab(pts.length - 1) + '</text>';
+    svg += '</svg>';
+    var box = h('div', { class: 'st-card wide' }, [h('h3', { text: (days === 1 ? 'Visitors per hour today' : 'Visitors per day') + ' · busiest: ' + max })]);
+    box.insertAdjacentHTML('beforeend', svg);
+    return box;
+  }
+  function statsConnectForm() {
+    var code = h('input', { type: 'text', placeholder: 'e.g. sysmatica', value: (data.analytics && data.analytics.goatcounter) || '' });
+    var key = h('input', { type: 'password', placeholder: 'Paste the API key', autocomplete: 'off' });
+    var pw = h('input', { type: 'password', placeholder: 'Admin password', autocomplete: 'current-password' });
+    var err = h('p', { class: 'err', hidden: true });
+    var btn = h('button', { class: 'btn', type: 'submit' }, 'Connect statistics');
+    var form = h('form', { class: 'st-connect' }, [
+      h('p', {}, ['Visitor statistics come from ', h('a', { href: 'https://www.goatcounter.com', target: '_blank', rel: 'noopener', text: 'GoatCounter' }), ', a free analytics service that uses no cookies and stores no personal data, so the website needs no cookie banner. One-time setup:']),
+      h('ol', {}, [
+        h('li', {}, ['Sign up free at ', h('a', { href: 'https://www.goatcounter.com/signup', target: '_blank', rel: 'noopener', text: 'goatcounter.com/signup' }), ' with a company email. The "Code" you choose becomes your stats address, for example ', h('b', { text: 'sysmatica' }), '.goatcounter.com.']),
+        h('li', {}, ['In GoatCounter open your user name (top right) → ', h('b', { text: 'API' }), ' → ', h('b', { text: 'New API key' }), '. Tick only ', h('b', { text: 'Read statistics' }), ', create it and copy the key.']),
+        h('li', { text: 'Fill in the boxes below and press Connect. The key is stored encrypted with your admin password, like the GitHub connection.' }),
+      ]),
+      h('label', { class: 'fld' }, [h('span', { text: 'GoatCounter code' }), code]),
+      h('label', { class: 'fld' }, [h('span', { text: 'API key' }), key]),
+      h('label', { class: 'fld' }, [h('span', { text: 'Admin password (to store the key safely)' }), pw]),
+      err, btn,
+    ]);
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault(); err.hidden = true;
+      var c = code.value.trim().toLowerCase().replace(/^https?:\/\//, '').replace(/\.goatcounter\.com.*$/, '');
+      try {
+        if (!/^[a-z0-9-]+$/.test(c)) throw new Error('The code should look like "sysmatica" (letters, numbers and dashes).');
+        if (key.value.trim().length < 10) throw new Error('Please paste the whole API key.');
+        if (isDirty()) throw new Error('Please save or undo your other changes first.');
+        btn.disabled = true; btn.textContent = 'Checking…';
+        if (!(await unlock(pw.value))) throw new Error('The admin password is wrong.');
+        var trial = Object.assign({}, creds, { stats: { code: c, token: key.value.trim() } });
+        var keep = creds; creds = trial;
+        try { await gcApi('/me'); } catch (ex) { creds = keep; throw ex; }
+        btn.textContent = 'Saving…';
+        data.analytics = { goatcounter: c };
+        var json = JSON.stringify(data, null, 2) + '\n';
+        var cfg = await encryptConfig(creds, pw.value);
+        await backend.save([{ path: 'admin/config.json', content: b64.utf8(cfg) }, { path: 'content/site.json', content: b64.utf8(json) }], 'Website admin: connect visitor statistics', function () {});
+        saved = JSON.stringify(data); changed();
+        toast('Statistics connected. Visitor counting starts on the website in 1–2 minutes.');
+        showSection('stats');
+      } catch (ex) { err.textContent = ex.message; err.hidden = false; }
+      btn.disabled = false; btn.textContent = 'Connect statistics';
+    });
+    return form;
+  }
+  function renderStats() {
+    var wrap = h('div');
+    if (!creds || !creds.stats || !creds.stats.token) { wrap.appendChild(statsConnectForm()); return wrap; }
+    var periods = [[1, 'Today'], [7, '7 days'], [30, '30 days'], [90, '3 months'], [365, '12 months']];
+    var bar = h('div', { class: 'st-periods', role: 'group', 'aria-label': 'Period' }, periods.map(function (p) {
+      return h('button', { type: 'button', class: 'btn btn--sm' + (p[0] === statsPeriod ? '' : ' btn--ghost'), onclick: function () { statsPeriod = p[0]; showSection('stats'); } }, p[1]);
+    }).concat([h('a', { class: 'btn btn--sm btn--ghost', href: 'https://' + creds.stats.code + '.goatcounter.com', target: '_blank', rel: 'noopener' }, 'Full dashboard ↗'),
+      h('button', { type: 'button', class: 'btn btn--sm btn--ghost', onclick: function () { delete statsCache[statsPeriod]; showSection('stats'); } }, 'Refresh')]));
+    var body = h('div', { class: 'st-body' }, [h('p', { class: 'muted', text: 'Loading statistics…' })]);
+    wrap.appendChild(bar); wrap.appendChild(body);
+    var period = statsPeriod;
+    (statsCache[period] ? Promise.resolve(statsCache[period]) : loadStats(period)).then(function (s) {
+      statsCache[period] = s;
+      if (current !== 'stats' || statsPeriod !== period) return;
+      var pages = [], events = [];
+      (s.hits.hits || []).forEach(function (x) { (x.event ? events : pages).push(x); });
+      var evCount = function (pred) { return events.filter(function (x) { return pred(x.path); }).reduce(function (a, x) { return a + x.count; }, 0); };
+      var visitors = (s.total.total || 0) - (s.total.total_events || 0);
+      body.innerHTML = '';
+      body.appendChild(h('div', { class: 'st-kpis' }, [
+        h('div', { class: 'st-kpi' }, [h('b', { text: fmt(visitors) }), h('span', { text: 'Visitors' })]),
+        h('div', { class: 'st-kpi' }, [h('b', { text: fmt(pages.reduce(function (a, x) { return a + x.count; }, 0)) }), h('span', { text: 'Page visits' })]),
+        h('div', { class: 'st-kpi' }, [h('b', { text: fmt(evCount(function (p) { return p === 'form-sent/enquiry'; })) }), h('span', { text: 'Enquiries sent' })]),
+        h('div', { class: 'st-kpi' }, [h('b', { text: fmt(evCount(function (p) { return p === 'form-sent/job-application'; })) }), h('span', { text: 'Job applications' })]),
+        h('div', { class: 'st-kpi' }, [h('b', { text: fmt(evCount(function (p) { return /^click-/.test(p); })) }), h('span', { text: 'Phone / email clicks' })]),
+      ]));
+      body.appendChild(chart(s.total.stats, period));
+      var grid = h('div', { class: 'st-grid' });
+      grid.appendChild(barList('Pages visited', pages.map(function (x) { return { l: pageName(x.path), n: x.count }; })));
+      grid.appendChild(barList('Services viewed', events.filter(function (x) { return x.path.indexOf('service/') === 0; }).map(function (x) { return { l: eventName(x.path).replace('Service opened: ', ''), n: x.count }; }), 'No service pop-ups opened in this period.'));
+      grid.appendChild(barList('Where visitors came from', (s.refs.stats || []).map(function (x) { return { l: x.name || 'Direct / unknown', n: x.count }; })));
+      grid.appendChild(barList('Countries', (s.locations.stats || []).map(function (x) { return { l: x.name || 'Unknown', n: x.count }; })));
+      grid.appendChild(barList('Devices', (s.sizes.stats || []).map(function (x) { return { l: SIZE[x.id] || x.name || x.id || 'Unknown', n: x.count }; })));
+      grid.appendChild(barList('Browsers', (s.browsers.stats || []).map(function (x) { return { l: x.name || 'Unknown', n: x.count }; })));
+      grid.appendChild(barList('Operating systems', (s.systems.stats || []).map(function (x) { return { l: x.name || 'Unknown', n: x.count }; })));
+      grid.appendChild(barList('Actions', events.filter(function (x) { return x.path.indexOf('service/') !== 0; }).map(function (x) { return { l: eventName(x.path), n: x.count }; }), 'No form sends or contact clicks in this period.'));
+      body.appendChild(grid);
+      body.appendChild(h('p', { class: 'muted small', text: 'Visitors are counted once per day per page, without cookies. Visits from people who block trackers are not counted, so real numbers are a little higher.' }));
+    }).catch(function (e) {
+      body.innerHTML = '';
+      body.appendChild(h('p', { class: 'err', text: e.message }));
+      body.appendChild(h('button', { class: 'btn btn--sm btn--ghost', type: 'button', onclick: function () { creds.stats = null; showSection('stats'); } }, 'Connect again'));
+    });
+    return wrap;
+  }
+
   /* ---------- sections ---------- */
   var SECTIONS = {
+    stats: { label: 'Stats', title: 'Website statistics', desc: 'How many people visit the website, what they look at, where they come from, and how many enquiries and applications it brings in.', render: renderStats },
     clients: { label: 'Clients', title: 'Clients', desc: 'The "Trusted by industry leaders" cards. Use the arrows to change the order.', render: function () {
       return listEditor(data.clients, {
         noun: 'client', title: function (c) { return c.name; }, sub: function (c) { return c.what; }, thumb: function (c) { return c.logo; },

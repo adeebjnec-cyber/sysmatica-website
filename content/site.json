@@ -986,5 +986,8 @@
     "notfound.top.4": "Our website has a new home. The page you were looking for may have been renamed or removed.",
     "notfound.top.5": "Back to homepage",
     "notfound.top.6": "Contact us"
+  },
+  "analytics": {
+    "goatcounter": ""
   }
 }

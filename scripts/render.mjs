@@ -19,6 +19,24 @@ return {
             <img src="${esc(I.about.src)}" alt="${esc(I.about.alt)}" loading="lazy">
             <figcaption class="micro">${esc(I.about.caption)}</figcaption>
           `,
+  // visitor statistics (GoatCounter: no cookies, no personal data). Events: enquiries, applications,
+  // service pop-ups opened, phone / email / WhatsApp clicks.
+  analytics: () => {
+    const code = site.analytics && site.analytics.goatcounter;
+    if (!code || !/^[a-z0-9-]+$/.test(code)) return '';
+    return `
+  <script data-goatcounter="https://${code}.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+  <script>
+    window.scTrack = function (path, title) { try { if (window.goatcounter && goatcounter.count) goatcounter.count({ path: path, title: title || path, event: true }); } catch (e) {} };
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest && e.target.closest('a[href^="tel:"], a[href^="mailto:"], a[href*="wa.me/"]');
+      if (!a) return;
+      var h = a.getAttribute('href');
+      scTrack(h.indexOf('tel:') === 0 ? 'click-phone' : h.indexOf('mailto:') === 0 ? 'click-email' : 'click-whatsapp');
+    });
+  </script>
+  `;
+  },
   'contact-image': () => `<img src="${esc(I.contact.src)}" alt="" loading="lazy">`,
   'careers-hero-image': () => `<img src="${esc(I.careersHero.src)}" alt="">`,
   'count-services': () => `<span class="v tnum" data-count="${S.length}">${S.length}</span>`,
