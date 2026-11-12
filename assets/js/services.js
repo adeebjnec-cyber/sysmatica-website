@@ -92,3 +92,14 @@
   });
 })();
 
+/* Facilities: thumbnails switch the main photo and its caption. */
+(function () {
+  'use strict';
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest && e.target.closest('.fac-thumbs button');
+    if (!b) return;
+    var card = b.closest('.fac'), k = b.getAttribute('data-k');
+    Array.prototype.forEach.call(card.querySelectorAll('.fac-pic img, .fac-cap'), function (el) { el.classList.toggle('on', el.getAttribute('data-k') === k); });
+    Array.prototype.forEach.call(card.querySelectorAll('.fac-thumbs button'), function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+  });
+})();

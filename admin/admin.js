@@ -215,7 +215,7 @@
     return h('div', { class: 'fld full' }, [h('span', {}, [label, opts.hint ? h('span', { class: 'hint', text: ' — ' + opts.hint }) : null]),
       h('div', { class: 'imgf' }, [pv, h('div', { class: 'act' }, [btn, path])])]);
   }
-  function galleryField(s, title) {
+  function galleryField(s, title, hint) {
     var box = h('div', { class: 'gal' });
     function draw() {
       box.innerHTML = '';
@@ -244,7 +244,7 @@
       } }, '+ Add image'));
     }
     draw();
-    return h('div', { class: 'fld full' }, [h('span', {}, ['Gallery images', h('span', { class: 'hint', text: ' — shown in the pop-up; the first one is the main image. Give each type its own image, title and description.' })]), box]);
+    return h('div', { class: 'fld full' }, [h('span', {}, [hint ? 'Photos' : 'Gallery images', h('span', { class: 'hint', text: ' — ' + (hint || 'shown in the pop-up; the first one is the main image. Give each type its own image, title and description.') })]), box]);
   }
   function move(arr, i, d) { var j = i + d; if (j < 0 || j >= arr.length) return; var t = arr[i]; arr[i] = arr[j]; arr[j] = t; }
 
@@ -571,11 +571,14 @@
     facilities: { label: 'Facilities', title: 'Our Facilities', desc: 'Machines and equipment shown in the "Our facilities" section. The section (and its menu link) appears on the website once at least one facility is added.', render: function () {
       data.facilities = data.facilities || [];
       return listEditor(data.facilities, {
-        noun: 'facility', photoThumb: true, title: function (f) { return f.name; }, sub: function (f) { return f.desc; }, thumb: function (f) { return f.image; },
-        blank: function () { return { name: '', image: '', desc: '', specs: [] }; },
-        fields: function (f, refresh) { return [
+        noun: 'facility', photoThumb: true, title: function (f) { return f.name; }, sub: function (f) { return f.desc; },
+        thumb: function (f) { var im = (f.images || [])[0]; return im ? (im.thumb || im.src) : f.image; },
+        blank: function () { return { name: '', images: [], desc: '', specs: [] }; },
+        fields: function (f, refresh) {
+          if (!f.images) { f.images = f.image ? [{ src: f.image }] : []; delete f.image; }
+          return [
           textField(f, 'name', 'Machine / facility name', { required: true, full: true, onInput: refresh }),
-          imageField(f, 'image', 'Photo', 'photo', { hint: 'a clear photo of the machine', name: function () { return 'facility-' + f.name; }, onChange: refresh }),
+          galleryField(f, function () { return 'facility-' + (f.name || 'photo'); }, 'add as many as you like; the first one is shown first. Each photo can have its own title and description (optional).'),
           textField(f, 'desc', 'Description', { multiline: true, full: true, onInput: refresh }),
           listField(f, 'specs', 'Key specifications', 'optional, e.g. "Table size: 1000 × 500 mm"'),
         ]; },
@@ -654,7 +657,7 @@
     });
     data.team.forEach(function (m, i) { if (!m.name.trim()) bad.push('Team member ' + (i + 1) + ' has no name'); if (!m.photo) bad.push('Team member "' + m.name + '" has no photo'); });
     data.industries.forEach(function (d, i) { if (!d.name.trim()) bad.push('Industry ' + (i + 1) + ' has no name'); if (!d.image) bad.push('Industry "' + d.name + '" has no photo'); });
-    (data.facilities || []).forEach(function (f, i) { if (!f.name.trim()) bad.push('Facility ' + (i + 1) + ' has no name'); if (!f.image) bad.push('Facility "' + f.name + '" has no photo'); });
+    (data.facilities || []).forEach(function (f, i) { if (!f.name.trim()) bad.push('Facility ' + (i + 1) + ' has no name'); if (!(f.images && f.images.length) && !f.image) bad.push('Facility "' + f.name + '" needs at least one photo'); });
     if (Object.keys(data.text || {}).some(function (k) { return !String(data.text[k]).trim(); })) bad.push('a box under "Page text" is empty (it is outlined in red)');
     return bad;
   }

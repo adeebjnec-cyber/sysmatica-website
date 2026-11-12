@@ -102,10 +102,16 @@ return {
   'industries-bgs': () => site.industries.map((d, k) => `<img class="${k === 0 ? 'on' : ''}" src="${esc(d.image)}" alt="" loading="lazy" data-k="${k}">`).join(''),
   'industries-list': () => site.industries.map((d, k) => `<li class="${k === 0 ? 'on' : ''}" data-k="${k}"><button type="button" aria-expanded="${k === 0}"><span class="n">${pad(k + 1)}</span><span class="t">${esc(d.name)}</span><span class="sv">${d.tags.map((t) => `<span>${esc(t)}</span>`).join('')}</span></button></li>`).join(''),
 
-  facilities: () => (site.facilities || []).map((f, i) => `
+  facilities: () => (site.facilities || []).map((f, i) => {
+    const ims = f.images?.length ? f.images : (f.image ? [{ src: f.image }] : []);
+    const n = ims.length;
+    const main = ims.map((im, k) => `<img class="${[im.cut ? 'cut' : '', k === 0 ? 'on' : ''].filter(Boolean).join(' ')}" src="${esc(im.src)}" alt="${esc(im.label || (n > 1 ? `${f.name} — photo ${k + 1}` : f.name))}" loading="lazy" data-k="${k}">`).join('');
+    const thumbs = n > 1 ? `<div class="fac-thumbs" role="group" aria-label="${esc(f.name)} photos">${ims.map((im, k) => `<button type="button" aria-pressed="${k === 0}" data-k="${k}" aria-label="${esc(im.label || `Photo ${k + 1} of ${n}`)}"><img class="${im.cut ? 'cut' : ''}" src="${esc(im.cut ? im.src : thumb(im))}" alt="" loading="lazy"></button>`).join('')}</div>` : '';
+    const caps = ims.some((im) => im.label || im.desc) ? `<div class="fac-caps" aria-live="polite">${ims.map((im, k) => `<p class="fac-cap${k === 0 ? ' on' : ''}" data-k="${k}">${im.label ? `<b>${esc(im.label)}</b>` : ''}${im.desc ? `<span>${esc(im.desc)}</span>` : ''}</p>`).join('')}</div>` : '';
+    return `
           <li data-in style="--i:${i % 3}">
             <article class="fac">
-              <div class="fac-pic">${f.image ? `<img src="${esc(f.image)}" alt="${esc(f.name)}" loading="lazy">` : ''}</div>
+              <div class="fac-pic">${main}${n > 1 ? `<span class="fac-count">${n} photos</span>` : ''}</div>${thumbs}${caps}
               <div class="fac-body">
                 <span class="fac-n">${pad(i + 1)}</span>
                 <h3>${esc(f.name)}</h3>${f.desc ? `
@@ -113,7 +119,8 @@ return {
                 <ul>${f.specs.map((t) => `<li>${esc(t)}</li>`).join('')}</ul>` : ''}
               </div>
             </article>
-          </li>`).join('') + '\n        ',
+          </li>`;
+  }).join('') + '\n        ',
 
   clients: () => site.clients.map((c, i) => `
           <li data-in style="--i:${i % 6}">

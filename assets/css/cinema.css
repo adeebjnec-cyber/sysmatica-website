@@ -633,9 +633,23 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .facilities { padding-block: clamp(110px, 12vw, 180px) 0; }
 .fac-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
 .fac { height: 100%; display: flex; flex-direction: column; border-radius: 22px; overflow: hidden; background: linear-gradient(170deg, rgb(var(--tint) / .38), rgb(var(--bg) / .7)); box-shadow: inset 0 0 0 1px var(--line); }
-.fac-pic { aspect-ratio: 4 / 3; background: rgb(var(--panel)); overflow: hidden; }
-.fac-pic img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 900ms var(--ease); }
-.fac:hover .fac-pic img { transform: scale(1.04); }
+.fac-pic { position: relative; aspect-ratio: 4 / 3; background: rgb(var(--panel)); overflow: hidden; }
+.fac-pic img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0; transition: opacity 450ms var(--ease-std), transform 900ms var(--ease); }
+.fac-pic img.cut { object-fit: contain; padding: 6%; }
+.fac-pic img.on { opacity: 1; }
+.fac:hover .fac-pic img.on { transform: scale(1.03); }
+.fac-count { position: absolute; right: 10px; bottom: 10px; padding: 4px 9px; border-radius: 999px; background: rgb(0 0 0 / .55); color: #fff; font-size: .6875rem; font-weight: 600; letter-spacing: .04em; }
+.fac-thumbs { display: flex; gap: 6px; padding: 10px 12px 0; overflow-x: auto; scrollbar-width: none; }
+.fac-thumbs::-webkit-scrollbar { display: none; }
+.fac-thumbs button { flex: none; width: 58px; height: 44px; border-radius: 8px; overflow: hidden; background: rgb(var(--panel)); opacity: .6; box-shadow: inset 0 0 0 1px var(--line-2); transition: opacity 200ms, box-shadow 200ms; }
+.fac-thumbs button:hover { opacity: .9; }
+.fac-thumbs button[aria-pressed="true"] { opacity: 1; box-shadow: inset 0 0 0 2px rgb(var(--accent)); }
+.fac-thumbs img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.fac-thumbs img.cut { object-fit: contain; padding: 3px; }
+.fac-caps { padding: 10px 24px 0; }
+.fac-cap { display: none; margin: 0; font-size: .8125rem; line-height: 1.5; color: rgb(var(--fg) / .7); }
+.fac-cap.on { display: block; }
+.fac-cap b { display: block; color: rgb(var(--fg)); font-weight: 600; }
 .fac-body { padding: 22px 24px 26px; }
 .fac-n { font-size: .6875rem; letter-spacing: .16em; color: rgb(var(--accent)); font-weight: 600; }
 .fac h3 { margin: 8px 0 10px; font-size: clamp(1.15rem, 1.5vw, 1.4rem); font-weight: 700; line-height: 1.15; letter-spacing: -0.02em; }
