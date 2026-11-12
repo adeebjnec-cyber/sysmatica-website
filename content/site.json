@@ -77,7 +77,8 @@
         {
           "src": "assets/img/spm-assembly-cut.webp",
           "cut": true,
-          "label": "Assembly SPM"
+          "label": "Assembly SPM",
+          "desc": "Sysmatica is company"
         },
         {
           "src": "assets/img/spm-leak-test-cut.webp",
