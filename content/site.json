@@ -713,6 +713,15 @@
       "what": "The largest Micro-Irrigation company in the world.",
       "logoW": 540,
       "logoH": 222
+    },
+    {
+      "name": "LAPL Automotive Pvt. Ltd.",
+      "url": "https://www.laplautomotive.com/",
+      "logo": "assets/img/uploads/client-lapl-automotive-pvt-ltd-mweumged.png",
+      "tall": false,
+      "what": "India's premier manufacturer of auto parts for two-wheelers, three-wheelers, buses and commercial vehicles.",
+      "logoW": 201,
+      "logoH": 82
     }
   ],
   "facilities": [
