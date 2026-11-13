@@ -25,13 +25,12 @@
     {
       "name": "Ramesh Kale",
       "role": "Director",
-      "photo": "assets/img/team-ramesh-kale.webp",
-      "photoW": 790,
-      "photoH": 860,
-      "bio": "Ramesh brings nearly 20 years of experience in enterprise software and manufacturing systems. Before becoming Director of SysMatica in December 2023, he spent 16 years as a Senior Software Engineer at Nirlep Appliances Ltd.",
+      "photo": "assets/img/uploads/team-ramesh-kale-mwesp0nc.webp",
+      "photoW": 288,
+      "photoH": 288,
+      "bio": "20+ Years in field of Mechatronics, IT, Automation.",
       "tags": [
-        "MCA · Govt. Engineering College, Aurangabad",
-        "Microsoft Certified · Dynamics AX"
+        "Govt. Engineering College, Chhatrapati Sambhajinagar"
       ],
       "linkedin": "https://www.linkedin.com/in/rbkale",
       "email": "ramesh@sysmpl.com"
