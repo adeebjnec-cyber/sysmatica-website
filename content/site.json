@@ -722,6 +722,15 @@
       "what": "India's premier manufacturer of auto parts for two-wheelers, three-wheelers, buses and commercial vehicles.",
       "logoW": 201,
       "logoH": 82
+    },
+    {
+      "name": "Aurik Green Solutions Pvt. Ltd.",
+      "url": "https://",
+      "logo": "assets/img/uploads/client-aurik-green-solutions-pvt-ltd-mweuxvvw.png",
+      "tall": false,
+      "what": "Aurik Green Solutions Pvt. Ltd. is a specialised automotive-grade CNG cylinder manufacturer",
+      "logoW": 200,
+      "logoH": 200
     }
   ],
   "facilities": [
